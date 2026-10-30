@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>중학교 공부방</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="home" href="index.html">← 중학교 공부방</a>
+    <span class="crumb" id="crumb"></span>
+    <button type="button" class="speed" id="speedBtn">천천히 읽기</button>
+  </header>
+  <header class="page-head">
+    <h1 class="one-line fit" id="title"></h1>
+    <p class="sub one-line fit" id="subtitle"></p>
+    <p class="tip" id="voiceTip" hidden>이 브라우저에는 영어 목소리가 없어서 발음이 어색할 수 있어요. 크롬이나 엣지, 휴대폰에서 열어 주세요.</p>
+  </header>
+
+  <nav class="tabs">
+    <button data-tab="concept">개념</button>
+    <button data-tab="words">단어</button>
+    <button data-tab="quiz">문제</button>
+  </nav>
+
+  <section class="panel concept" id="p-concept"></section>
+
+  <section class="panel words-panel" id="p-words" hidden>
+    <div class="word-tools">
+      <button class="btn on" data-hide="">모두 보기</button>
+      <button class="btn" data-hide="hide-en">영어 가리기</button>
+      <button class="btn" data-hide="hide-ko">뜻 가리기</button>
+      <button class="btn main" id="sayAll">모두 듣기</button>
+    </div>
+    <p class="tip">가린 단어는 눌러서 잠깐 볼 수 있어요. 스피커를 누르면 읽어 줘요.</p>
+    <div class="words" id="wordList"></div>
+  </section>
+
+  <section class="panel quiz" id="p-quiz" hidden>
+    <div class="maker">
+      <h2>문제지 만들기</h2>
+      <div class="row">
+        <span class="label">범위</span>
+        <label class="chip"><input type="checkbox" name="cat" value="vocab" checked><span>단어</span></label>
+        <label class="chip"><input type="checkbox" name="cat" value="talk" checked><span>대화</span></label>
+        <label class="chip"><input type="checkbox" name="cat" value="grammar" checked><span>문법</span></label>
+        <label class="chip"><input type="checkbox" name="cat" value="reading" checked><span>본문</span></label>
+      </div>
+      <div class="row">
+        <span class="label">문제 수</span>
+        <label class="chip"><input type="radio" name="count" value="10"><span>10문제</span></label>
+        <label class="chip"><input type="radio" name="count" value="20" checked><span>20문제</span></label>
+        <label class="chip"><input type="radio" name="count" value="30"><span>30문제</span></label>
+        <label class="chip"><input type="radio" name="count" value="999"><span>전부</span></label>
+      </div>
+      <div class="row">
+        <span class="label">프린트</span>
+        <label class="chip"><input type="checkbox" id="withAnswers" checked><span>정답지도 함께</span></label>
+      </div>
+      <div class="actions">
+        <button class="btn main" id="makeBtn">새 문제지 만들기</button>
+        <button class="btn accent" id="gradeBtn">채점하기</button>
+        <button class="btn" id="retryBtn">다시 풀기</button>
+        <button class="btn" id="printBtn">프린트</button>
+      </div>
+    </div>
+    <div class="sheet" id="sheet"></div>
+  </section>
+</div>
+
+<script src="common.js"></script>
+<script src="unit.js"></script>
+</body>
+</html>

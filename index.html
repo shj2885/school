@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>중학교 공부방</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+  <header class="top"><a class="home" href="index.html">중학교 공부방</a></header>
+  <h1 class="one-line fit">중학교 공부방</h1>
+  <p class="sub">개념을 읽고, 문제를 풀고, 문제지를 프린트해요.</p>
+  <div id="list"></div>
+</div>
+
+<script>
+// 학년 → 과목 → 단원. 단원을 새로 만들면 여기에 한 줄 더하면 돼요.
+const CATALOG = [
+  { grade: "중1", subjects: ["국어", "영어", "수학", "사회", "과학"] },
+  { grade: "중2", subjects: ["국어", "영어", "수학", "사회", "과학", "역사"],
+    lessons: { "영어": [{ id: "e2-l7", name: "7과 세계의 축제" }] } },
+  { grade: "중3", subjects: ["국어", "영어", "수학", "사회", "과학", "역사"] }
+];
+
+const list = document.getElementById("list");
+list.innerHTML = CATALOG.map(g => `
+  <h2 class="grade">${g.grade}</h2>
+  <div class="subjects">
+    ${g.subjects.map(s => {
+      const ls = (g.lessons && g.lessons[s]) || [];
+      return `<div class="subject">
+        <h3>${s}</h3>
+        ${ls.length
+          ? ls.map(l => `<a class="lesson-link fit" href="unit.html?id=${l.id}">${l.name}</a>`).join("")
+          : `<div class="soon">준비 중</div>`}
+      </div>`;
+    }).join("")}
+  </div>`).join("");
+</script>
+<script src="common.js"></script>
+</body>
+</html>
