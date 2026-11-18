@@ -35,6 +35,13 @@ function start(unit) {
   document.getElementById("title").textContent = `${U.lesson} ${U.title}`;
   document.getElementById("subtitle").textContent = U.korTitle;
 
+  // 이 단원에 문제가 없는 범위(예: 대화가 없는 단원)는 고르는 칸을 숨겨요
+  document.querySelectorAll("input[name=cat]").forEach(i => {
+    if (i.value === "vocab" || U.questions.some(q => q.cat === i.value)) return;
+    i.checked = false;
+    i.closest("label").style.display = "none";
+  });
+
   setupSpeed();
   renderConcepts();
   renderWords();
