@@ -22,13 +22,25 @@ const TTS = {
 
 try { TTS.slow = localStorage.getItem("tts-slow") === "1"; } catch (e) {}
 
-// 미국 영어 목소리를 먼저 찾고, 없으면 아무 영어 목소리나 써요
+// 원어민처럼 자연스러운 목소리를 먼저 골라요.
+// (윈도우 기본 목소리 Zira·David는 기계 같아서 맨 뒤로 미뤄요)
+const VOICE_RANK = [
+  /(Ava|Aria|Jenny|Emma|Andrew|Brian|Guy|Michelle).*(Natural|Online)/i,  // 엣지의 자연스러운 목소리
+  /(Natural|Online)/i,
+  /Google US English/i,                                                  // 크롬
+  /Samantha|Alex|Allison|Ava|Nicky/i,                                    // 아이폰·맥
+  /Google/i,                                                             // 안드로이드
+];
+function voiceScore(v) {
+  const us = /en[-_]US/i.test(v.lang) ? 0 : 0.5;
+  if (/Zira|David|Mark/i.test(v.name) && !/Natural|Online/i.test(v.name)) return 50 + us;
+  const i = VOICE_RANK.findIndex(r => r.test(v.name));
+  return (i < 0 ? 20 : i) + us;
+}
 function pickVoice() {
   const voices = speechSynthesis.getVoices().filter(v => /^en[-_]/i.test(v.lang));
-  const liked = /Google US English|Samantha|Aria|Jenny|Zira|Natural/i;
-  TTS.voice = voices.find(v => /en[-_]US/i.test(v.lang) && liked.test(v.name))
-    || voices.find(v => /en[-_]US/i.test(v.lang))
-    || voices[0] || null;
+  voices.sort((a, b) => voiceScore(a) - voiceScore(b));
+  TTS.voice = voices[0] || null;
 }
 if (TTS.ok) {
   pickVoice();
