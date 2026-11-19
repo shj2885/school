@@ -1,0 +1,13 @@
+{
+  "name": "중2 정보 형성평가",
+  "short_name": "정보 문제",
+  "start_url": "./",
+  "scope": "./",
+  "id": "./",
+  "display": "standalone",
+  "background_color": "#12261b",
+  "theme_color": "#12261b",
+  "icons": [
+    { "src": "icon.png", "sizes": "512x512", "type": "image/png", "purpose": "any" }
+  ]
+}
