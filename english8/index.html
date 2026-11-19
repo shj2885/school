@@ -1,0 +1,1302 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>영어 8과 Time Travel</title>
+<meta name="theme-color" content="#12261b">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" href="icon.png">
+<link rel="apple-touch-icon" href="icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="영어 8과">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+<style>
+:root{
+  --jungle:#12261b; --jungle2:#1b3a28; --leaf:#2f6b45; --moss:#8fc26a;
+  --amber:#ffb627; --amber-soft:#fff1cf; --paper:#fbf7ec; --ink:#1d2a22;
+  --muted:#5d6b62; --line:#e3dccb; --card:#ffffff; --red:#d9483b;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--paper);color:var(--ink);
+  font-family:"Malgun Gothic","맑은 고딕","Apple SD Gothic Neo",sans-serif;line-height:1.6}
+button{font-family:inherit;cursor:pointer}
+
+/* 위쪽 머리 */
+header{background:radial-gradient(circle at 85% 20%,#2f6b45 0,transparent 45%),
+  linear-gradient(160deg,var(--jungle),var(--jungle2));color:#fff;padding:18px 16px 0}
+.head-in{max-width:960px;margin:0 auto}
+.lesson{font-family:Jua,sans-serif;color:var(--amber);font-size:15px;letter-spacing:.5px}
+h1{font-family:Jua,sans-serif;font-weight:400;margin:2px 0 4px;font-size:clamp(22px,5.4vw,34px);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sub{color:#cfe3d3;font-size:14px;margin:0 0 14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+.voicebar{display:flex;align-items:center;gap:8px;font-size:13px;color:#cfe3d3;margin:-6px 0 12px;flex-wrap:wrap}
+.voicebar select{max-width:220px;border:0;border-radius:8px;padding:4px 8px;font-family:inherit;font-size:13px;background:#fff;color:var(--ink)}
+.speed{display:inline-flex;background:rgba(255,255,255,.1);border-radius:999px;padding:2px}
+.speed button{border:0;background:none;color:#cfe3d3;font-size:13px;padding:4px 10px;border-radius:999px;white-space:nowrap}
+.speed button.on{background:var(--amber);color:var(--jungle);font-weight:700}
+#voiceNote{background:var(--amber);color:var(--jungle);border-radius:8px;padding:3px 8px;font-weight:700}
+/* 칸 고르기 */
+nav{display:flex;gap:6px;overflow-x:auto;padding-bottom:0;scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+nav button{flex:0 0 auto;border:0;border-radius:12px 12px 0 0;padding:9px 13px;
+  background:rgba(255,255,255,.08);color:#cfe3d3;font-size:14px;white-space:nowrap}
+nav button.on{background:var(--paper);color:var(--ink);font-weight:700}
+nav button .n{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;
+  background:var(--amber);color:var(--jungle);font-size:12px;font-weight:700;margin-right:5px}
+nav button.wait{opacity:.55}
+
+main{max-width:960px;margin:0 auto;padding:22px 16px 60px}
+section{display:none}
+section.on{display:block}
+h2{font-family:Jua,sans-serif;font-weight:400;font-size:clamp(20px,4.6vw,26px);margin:0 0 4px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.page{color:var(--muted);font-size:13px;margin:0 0 16px}
+h3{font-size:17px;margin:26px 0 10px}
+
+/* 엄마 말풍선 */
+.mom{background:var(--amber-soft);border-left:5px solid var(--amber);border-radius:10px;
+  padding:12px 14px;margin:14px 0;font-size:15px}
+.mom b.tag{display:inline-block;background:var(--amber);color:var(--jungle);border-radius:6px;
+  padding:0 7px;font-size:12px;margin-right:6px}
+
+/* ① 들어가기 */
+.bigidea{background:linear-gradient(135deg,var(--jungle2),var(--leaf));color:#fff;border-radius:16px;
+  padding:18px;display:flex;gap:14px;align-items:center}
+.bigidea .ico{font-size:44px}
+.bigidea small{color:var(--amber);font-weight:700}
+.bigidea p{margin:2px 0 0;font-size:20px;font-family:Jua,sans-serif}
+.eras{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
+.era{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:12px;text-align:center}
+.era .e{font-size:34px}
+.era .en{font-weight:700;font-size:14px;margin-top:4px}
+.era .ko{color:var(--muted);font-size:13px}
+.pattern{background:var(--card);border:2px dashed var(--leaf);border-radius:14px;padding:14px;font-size:17px}
+.pattern .blank{display:inline-block;min-width:90px;border-bottom:2px solid var(--leaf);color:var(--leaf);text-align:center}
+.goal{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.goal div{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px;font-size:14px}
+.goal b{display:block;color:var(--leaf)}
+
+/* ② 단어 */
+.guess{display:grid;gap:8px}
+.guess .g{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:15px}
+.guess u{text-decoration-color:var(--amber);text-decoration-thickness:3px}
+.guess .g{display:grid;grid-template-columns:1fr 1fr;gap:4px 16px;align-items:center}
+.guess .ko{color:#3b4a40;font-size:14.5px;border-left:2px solid var(--line);padding-left:12px}
+.guess .key{display:inline-block;min-width:3.2em;background:var(--amber-soft);border-bottom:2px solid var(--amber);
+  color:transparent;border-radius:4px;text-align:center;user-select:none}
+.guess .key::before{content:"？";color:var(--amber);font-weight:700}
+.guess .g.open .key{color:var(--leaf);font-weight:700;background:none;user-select:auto}
+.guess .g.open .key::before{content:none}
+@media (max-width:700px){ .guess .g{grid-template-columns:1fr} .guess .ko{border-left:0;padding-left:26px} }
+.tools{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 12px}
+.btn{border:0;border-radius:999px;padding:8px 14px;font-size:14px;background:var(--leaf);color:#fff}
+.btn.ghost{background:var(--card);color:var(--leaf);border:2px solid var(--leaf)}
+.wrap{overflow-x:auto;border-radius:14px;border:1px solid var(--line);background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:15px}
+th{background:var(--jungle2);color:#fff;text-align:left;padding:9px 10px;font-weight:600;white-space:nowrap}
+td{padding:9px 10px;border-top:1px solid var(--line);vertical-align:top}
+tr.scene td{background:#eef5e8;color:var(--leaf);font-weight:700;font-size:13px;padding:6px 10px}
+td.w{font-weight:700;white-space:nowrap}
+td.m{white-space:nowrap}
+td.ex{color:#3b4a40}
+td.ex b{color:var(--red)}
+.say{border:0;background:none;font-size:17px;padding:0 4px 0 0;vertical-align:-1px}
+.hide-m td.m span{background:var(--line);color:transparent;border-radius:5px;user-select:none}
+.hide-m td.m span.peek{background:none;color:inherit}
+.hide-w td.w span{background:var(--line);color:transparent;border-radius:5px;user-select:none}
+.hide-w td.w span.peek{background:none;color:inherit}
+
+/* ③ 본문 */
+.cast{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:8px}
+.cast div{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:9px 12px;font-size:14px;color:var(--muted)}
+.cast span{font-size:22px;margin-right:6px;vertical-align:-3px}
+.cast b{color:var(--ink);margin-right:6px}
+.scenes{display:flex;gap:6px;flex-wrap:wrap;margin:24px 0 12px;position:sticky;top:0;z-index:5;
+  background:var(--paper);padding:8px 0}
+.scenes button{border:2px solid var(--leaf);background:var(--card);color:var(--leaf);border-radius:999px;
+  padding:6px 13px;font-size:14px;font-weight:700}
+.scenes button.on{background:var(--leaf);color:#fff}
+.scard{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.shead{background:linear-gradient(135deg,var(--jungle2),var(--leaf));color:#fff;padding:14px 16px}
+.shead .t{font-family:Jua,sans-serif;font-size:21px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.shead .p{color:var(--amber);font-size:13px}
+.shead .story{color:#e2efe4;font-size:14px;margin-top:4px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;padding:12px 16px 0}
+.chips span{background:#eef5e8;color:var(--leaf);border-radius:999px;padding:2px 10px;font-size:13px}
+.chips span i{font-style:normal;color:var(--muted);margin-left:4px}
+.sbar{display:flex;gap:8px;flex-wrap:wrap;padding:12px 16px}
+.sent{display:flex;gap:6px;padding:10px 16px;border-top:1px dashed var(--line);cursor:pointer;transition:background .2s}
+.sent:hover{background:#fffaf0}
+.sent.now{background:var(--amber-soft)}
+.sent .num{flex:0 0 22px;color:var(--muted);font-size:12px;padding-top:4px}
+.sent .body{flex:1}
+.sent .e{font-size:17px;line-height:1.55}
+.sent .k{margin-top:3px;font-size:15px;color:var(--leaf);display:none}
+.sent .k::before{content:"→ ";color:var(--amber)}
+.sent.open .k{display:block}
+.sent .hint{font-size:12px;color:var(--muted)}
+.sent.open .hint{display:none}
+.gram{display:inline-block;background:var(--red);color:#fff;border-radius:6px;font-size:11px;padding:0 6px;margin-left:6px;vertical-align:2px}
+.qbox{border-top:1px solid var(--line);background:#f6f9f2;padding:12px 16px}
+.q{margin:6px 0 12px}
+.q .qq{font-weight:700}
+.q .qq .tag{display:inline-block;background:var(--leaf);color:#fff;border-radius:6px;font-size:12px;padding:0 7px;margin-right:6px}
+.q .qq .tag.think{background:var(--amber);color:var(--jungle)}
+.q .qk{color:var(--muted);font-size:14px}
+.q .qa{display:none;margin-top:6px;background:#fff;border-left:4px solid var(--moss);border-radius:8px;padding:8px 10px;font-size:15px}
+.q.open .qa{display:block}
+.q .qa small{display:block;color:var(--muted)}
+.q button{margin-top:6px}
+.snav{display:flex;justify-content:space-between;padding:12px 16px;border-top:1px solid var(--line)}
+/* ④ 줄거리 */
+.plot{display:grid;gap:8px}
+.pl{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 12px;display:flex;gap:10px}
+.pl .no{flex:0 0 26px;height:26px;border-radius:50%;background:var(--leaf);color:#fff;display:grid;place-items:center;font-weight:700;font-size:13px}
+.pl .tx{font-size:16px;line-height:2}
+.pl .ko{font-size:13px;color:var(--muted);line-height:1.5}
+.pl input{width:7.5em;border:0;border-bottom:2px solid var(--amber);background:var(--amber-soft);border-radius:4px 4px 0 0;
+  padding:1px 6px;font:inherit;font-weight:700;color:var(--leaf);text-align:center}
+.pl input.ok{border-color:var(--moss);background:#e6f3dc}
+.pl input.no{border-color:var(--red);background:#fde6e3;color:var(--red)}
+.score{align-self:center;font-weight:700;color:var(--leaf)}
+.who{display:grid;gap:8px}
+.wq{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.wq .line{font-size:16px}
+.wq .ko{font-size:13px;color:var(--muted)}
+.wq .opts{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.wq .opts button{border:2px solid var(--line);background:#fff;border-radius:999px;padding:4px 12px;font-size:14px}
+.wq .opts button.right{border-color:var(--moss);background:#e6f3dc;color:var(--leaf);font-weight:700}
+.wq .opts button.wrong{border-color:var(--red);color:var(--red);animation:shake .3s}
+@keyframes shake{25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+/* ⑤ 문법 */
+.mini{font-weight:400;color:var(--muted);font-size:14px}
+.gcard{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:22px}
+.ghead{font-family:Jua,sans-serif;font-size:21px;margin-bottom:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ghead b{font-weight:400;color:var(--leaf)}
+.gno{display:inline-block;background:var(--amber);color:var(--jungle);border-radius:8px;font-size:14px;padding:1px 8px;margin-right:8px;vertical-align:3px;font-family:inherit;font-weight:700}
+.gkey{background:var(--jungle2);color:#fff;border-radius:12px;padding:14px;font-size:19px}
+.gkey b{color:var(--amber)}
+.gkey .ko{color:#cfe3d3;font-size:14px;margin-top:4px}
+.gkey .ko b{color:var(--amber)}
+.easy{padding:6px 2px}
+.easy p{margin:8px 0}
+.easy b{color:var(--leaf)}
+.vs{display:flex;gap:8px;flex-wrap:wrap}
+.vs div{border-radius:8px;padding:4px 12px;font-weight:700}
+.vs .bad{background:#fde6e3;color:var(--red);text-decoration:line-through}
+.vs .good{background:#e6f3dc;color:var(--leaf)}
+.uses{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:8px;margin:8px 0}
+.uses>div{background:#f6f9f2;border-radius:12px;padding:10px 12px}
+.uses .ut{display:inline-block;background:var(--leaf);color:#fff;border-radius:6px;padding:0 8px;font-size:13px;font-weight:700;margin-right:6px}
+.uses small{color:var(--muted)}
+.uses p{margin:6px 0 2px;font-size:16px}
+.uses p b{color:var(--red)}
+.uses .ko,.pattern .ko{color:var(--muted);font-size:13.5px}
+.pp{margin:10px 0;background:#fffaf0;border:1px solid var(--line);border-radius:12px;padding:8px 12px}
+.pp summary{cursor:pointer;font-weight:700;color:var(--leaf)}
+.pp table{margin-top:8px;font-size:14px}
+.pp th{background:var(--leaf)}
+.exp td,.exp th{text-align:center}
+.exp td:first-child{text-align:left}
+.yn{display:inline-flex;gap:4px}
+.yn button{border:2px solid var(--line);background:#fff;border-radius:999px;padding:2px 10px;font-size:13px}
+.yn button.on{background:var(--leaf);border-color:var(--leaf);color:#fff}
+.yn button.on.n{background:var(--muted);border-color:var(--muted)}
+.exp tr.both td{background:var(--amber-soft)}
+.ord{background:#f6f9f2;border-radius:12px;padding:12px;margin-bottom:10px}
+.ord .front,.ord .back{font-size:16px}
+.ord .back{color:var(--muted);font-size:14px;margin-top:6px}
+.ord .slot{min-height:40px;display:flex;flex-wrap:wrap;gap:6px;align-items:center;border-bottom:2px dashed var(--leaf);padding:6px 0;margin:6px 0}
+.ord .slot:empty::before{content:"여기에 단어가 놓여요";color:#aab4ad;font-size:13px}
+.ord .bank{display:flex;flex-wrap:wrap;gap:6px}
+.tile{border:2px solid var(--leaf);background:#fff;color:var(--leaf);border-radius:8px;padding:4px 12px;font-size:15px;font-weight:700}
+.tile.used{visibility:hidden}
+.ord.ok .slot{border-color:var(--moss);background:#e6f3dc;border-radius:8px}
+.ord.no .slot{border-color:var(--red)}
+.ord .res{font-weight:700;font-size:14px;min-height:20px}
+.trail{display:flex;align-items:center;gap:2px;font-size:22px;margin:6px 0 12px;flex-wrap:nowrap;overflow-x:auto}
+.trail span{flex:0 0 auto;width:30px;height:30px;display:grid;place-items:center;border-radius:50%;background:#eef5e8;font-size:16px}
+.trail span.me{background:var(--amber);font-size:20px}
+.trail span.end{background:none;font-size:26px;width:auto}
+.tq-q{font-size:15px;color:var(--muted);margin-bottom:6px}
+.tq-o{display:grid;gap:8px}
+.tq-o button{text-align:left;border:2px solid var(--line);background:#fff;border-radius:12px;padding:10px 14px;font-size:16px}
+.tq-o button:hover{border-color:var(--leaf)}
+.tq-o button.wrong{border-color:var(--red);color:var(--red);animation:shake .3s}
+.tq-msg{min-height:24px;margin-top:8px;font-weight:700;color:var(--leaf)}
+/* ⑥ 써 보기 */
+.comic{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px}
+.panel{border:3px solid var(--jungle2);border-radius:12px;padding:10px;background:#fff}
+.panel .pic{font-size:34px;text-align:center;background:#eef5e8;border-radius:8px;padding:8px 0;margin-bottom:6px}
+.panel p{margin:0;font-size:15px}
+.panel .ko,.exbox .ko,.letter .ko{color:var(--muted);font-size:13px}
+.story-w{background:#fffdf6;border:1px solid var(--line);border-radius:12px;padding:6px 14px;
+  background-image:repeating-linear-gradient(transparent 0 39px,#efe7d3 39px 40px);font-size:16px;line-height:40px}
+.story-w p{margin:0 0 4px}
+.wi{border:0;border-bottom:2px solid var(--amber);background:var(--amber-soft);border-radius:4px 4px 0 0;
+  font:inherit;color:var(--leaf);font-weight:700;padding:0 6px;width:min(26em,100%);line-height:1.6}
+.wi::placeholder{color:#c2a35c;font-weight:400;font-size:14px}
+.exbox{background:#f6f9f2;border-radius:12px;padding:10px 14px;margin-top:6px}
+.exbox p{margin:6px 0}
+.check{display:grid;gap:6px}
+.check label{background:#fff;border:1px solid var(--line);border-radius:10px;padding:8px 12px;cursor:pointer}
+.check input{accent-color:var(--leaf);width:18px;height:18px;vertical-align:-3px;margin-right:6px}
+.letter{background:#fff;border:2px dashed var(--amber);border-radius:12px;padding:12px 16px;font-size:16px}
+.letter p{margin:0 0 8px}
+.print-only{display:none}
+@media print{
+  body *{visibility:hidden}
+  #printLetter,#printLetter *{visibility:visible}
+  #printLetter{display:block;position:absolute;inset:0;padding:40px;font-size:20px;line-height:1.9}
+}
+/* ⑦ 마무리 */
+.bogi{background:#f6f9f2;border:1px dashed var(--leaf);border-radius:10px;padding:8px 12px;margin-bottom:8px;font-size:15px}
+.bogi b{color:var(--red)}
+.pick{display:grid;gap:8px}
+.pk{background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.pk .s{font-size:16px}
+.pk .ko{color:var(--muted);font-size:13px}
+.pk .opts{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.pk .opts button{border:2px solid var(--line);background:#fff;border-radius:999px;padding:4px 14px;font-size:15px;font-weight:700}
+.pk .opts button.right{border-color:var(--moss);background:#e6f3dc;color:var(--leaf)}
+.pk .opts button.wrong{border-color:var(--red);color:var(--red);animation:shake .3s}
+.pk .why{display:none;color:var(--leaf);font-size:13.5px;margin-top:4px}
+.pk.done .why{display:block}
+.seq{display:grid;gap:6px}
+.seq button{display:flex;gap:10px;align-items:center;text-align:left;border:2px solid var(--line);background:#fff;border-radius:12px;padding:8px 12px;font-size:15px}
+.seq button .n{flex:0 0 28px;height:28px;border-radius:50%;background:#eef1ec;display:grid;place-items:center;font-weight:700;color:var(--muted)}
+.seq button.on{border-color:var(--moss);background:#f2f9ec}
+.seq button.on .n{background:var(--leaf);color:#fff}
+.seq button.wrong{border-color:var(--red);animation:shake .3s}
+.self{display:grid;gap:8px}
+.self>div{display:flex;justify-content:space-between;align-items:center;gap:10px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:8px 12px}
+.self p{margin:0;font-size:14.5px}
+.faces{display:flex;gap:4px;flex:0 0 auto}
+.faces button{border:2px solid var(--line);background:#fff;border-radius:50%;width:40px;height:40px;font-size:20px;opacity:.5}
+.faces button.on{opacity:1;border-color:var(--amber);background:var(--amber-soft)}
+.finish{text-align:center;background:linear-gradient(160deg,var(--jungle),var(--leaf));color:#fff;border-radius:16px;padding:22px 16px}
+.finish .e{font-size:44px}
+.finish b{font-family:Jua,sans-serif;font-weight:400;font-size:22px;color:var(--amber)}
+.finish p{margin:6px 0 0;color:#cfe3d3;font-size:14px}
+/* 정답·오답 구분 표시 */
+.mark{display:inline;margin:0 4px;font-size:15px;white-space:nowrap}
+.ans-tag{display:inline-block;background:var(--leaf);color:#fff;border-radius:6px;padding:0 8px;font-size:13.5px;font-weight:700;line-height:1.7;vertical-align:1px}
+.pl input.no{text-decoration:line-through;text-decoration-thickness:2px}
+.opts button.right::after,.tq-o button.right::after{content:" ⭕ 정답";font-size:12.5px}
+.opts button.wrong::after,.tq-o button.wrong::after{content:" ❌ 오답";font-size:12.5px}
+.opts button.right{background:var(--leaf)!important;color:#fff!important;border-color:var(--leaf)!important}
+.opts button.wrong{text-decoration:line-through}
+.legend{display:flex;gap:10px;flex-wrap:wrap;font-size:13px;color:var(--muted);margin:0 0 12px}
+.legend span{background:#fff;border:1px solid var(--line);border-radius:999px;padding:2px 10px}
+/* 아직 안 만든 칸 */
+.soon{text-align:center;padding:50px 10px;color:var(--muted)}
+.soon .e{font-size:48px}
+
+@media (max-width:560px){
+  .goal{grid-template-columns:1fr}
+  td.ex{font-size:13px}
+  table{font-size:14px}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="head-in">
+    <div class="lesson">LESSON 8 · 동아(윤) 중2</div>
+    <h1>🦖 Time Travel 시간 여행</h1>
+    <p class="sub">A Butterfly That Changed the Future · 136~153쪽</p>
+    <div class="voicebar">🔊 목소리
+      <select id="voice" hidden aria-label="영어 읽어 주는 목소리"></select>
+      <span class="speed" id="speed">
+        <button data-r="1" class="on">🐇 보통</button><button data-r="0.7">🐢 천천히</button><button data-r="0.5">🐌 아주 천천히</button>
+      </span>
+      <span id="voiceNote" hidden>이 브라우저엔 영어 목소리가 없어요. 엣지(Edge)나 크롬으로 열어 주세요.</span>
+    </div>
+    <nav id="nav">
+      <button data-go="s1" class="on"><span class="n">1</span>들어가기</button>
+      <button data-go="s2"><span class="n">2</span>단어</button>
+      <button data-go="s3"><span class="n">3</span>본문</button>
+      <button data-go="s4"><span class="n">4</span>줄거리</button>
+      <button data-go="s5"><span class="n">5</span>문법</button>
+      <button data-go="s6"><span class="n">6</span>써 보기</button>
+      <button data-go="s7"><span class="n">7</span>마무리</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+<!-- ① 들어가기 -->
+<section id="s1" class="on">
+  <h2>① 들어가기</h2>
+  <p class="page">교과서 136~137쪽</p>
+
+  <div class="bigidea">
+    <div class="ico">⏳</div>
+    <div><small>BIG IDEA</small><p>상상 속 시간 여행</p></div>
+  </div>
+
+  <h3>이번 과에서 배울 것</h3>
+  <div class="goal">
+    <div><b>📖 읽기</b>시간 여행 이야기 〈미래를 바꾼 나비〉를 읽고 흐름을 알아요.</div>
+    <div><b>✏️ 언어 형식</b>I've never <u>seen</u> such a huge thing.<br>I don't want you to do <u>anything foolish</u>.</div>
+  </div>
+
+  <h3>🚀 타임머신을 타면 어디로 갈까?</h3>
+  <div class="eras">
+    <div class="era"><div class="e">🏺</div><div class="en">Egypt in the 26th century BC</div><div class="ko">기원전 26세기 이집트</div></div>
+    <div class="era"><div class="e">🦖</div><div class="en">the jungle of 60 million years ago</div><div class="ko">6천만 년 전 정글</div></div>
+    <div class="era"><div class="e">📜</div><div class="en">Joseon in the 15th century</div><div class="ko">15세기 조선</div></div>
+    <div class="era"><div class="e">🏰</div><div class="en">England in the 13th century</div><div class="ko">13세기 영국</div></div>
+    <div class="era"><div class="e">🪐</div><div class="en">Mars in the 24th century</div><div class="ko">24세기 화성</div></div>
+  </div>
+
+  <h3>이렇게 말해 봐요</h3>
+  <div class="pattern">
+    <button class="say" data-say="I want to visit Joseon in the 15th century and make Hangeul with King Sejong.">🔊</button>
+    I want to visit <span class="blank">Joseon in the 15th century</span> and <span class="blank">make Hangeul with King Sejong</span>.
+    <div style="color:var(--muted);font-size:14px;margin-top:6px">나는 15세기 조선에 가서 세종대왕과 한글을 만들고 싶어요.</div>
+  </div>
+
+  <div class="mom"><b class="tag">엄마 한마디</b>
+    "타임머신이 있으면 위 다섯 곳 중에 어디 가고 싶어? 가서 뭐 하고 싶어?"<br>
+    → 아들이 고르면 <b>I want to visit ___ and ___.</b> 틀에 넣어 영어로 말하게 해 주세요. 오늘 이야기는 <b>🦖 6천만 년 전 정글</b>로 가는 이야기라고 알려 주면 좋아요.
+  </div>
+</section>
+
+<!-- ② 단어 -->
+<section id="s2">
+  <h2>② 단어</h2>
+  <p class="page">교과서 138쪽 + 본문 아래 단어 (139~144쪽)</p>
+
+  <h3>🗞️ 신문 기사 속 단어 뜻 맞혀 보기 <span style="font-weight:400;color:var(--muted);font-size:14px">(138쪽 A)</span></h3>
+  <div class="guess" id="guess">
+    <div class="g"><div class="en"><button class="say" data-say="Abraham Lincoln became the 16th president of the USA in 1861.">🔊</button>Abraham Lincoln became the 16th <u>president</u> of the USA in 1861.</div>
+      <div class="ko">에이브러햄 링컨은 1861년에 미국의 16대 <span class="key">대통령</span>이 되었다.</div></div>
+    <div class="g"><div class="en"><button class="say" data-say="Many people panicked in the fire on Green Street.">🔊</button>Many people <u>panicked</u> in the fire on Green Street.</div>
+      <div class="ko">그린 가에서 난 불 속에서 많은 사람들이 <span class="key">겁에 질려 어쩔 줄 몰랐다</span>.</div></div>
+    <div class="g"><div class="en"><button class="say" data-say="A bear family appeared, and cars stopped to watch them.">🔊</button>A bear family <u>appeared</u>, and cars stopped to watch them.</div>
+      <div class="ko">곰 가족이 <span class="key">나타났고</span>, 차들이 그들을 보려고 멈춰 섰다.</div></div>
+    <div class="g"><div class="en"><button class="say" data-say="A new bike path will open along the river next month.">🔊</button>A new bike <u>path</u> will open along the river next month.</div>
+      <div class="ko">다음 달에 강을 따라 새 자전거 <span class="key">길</span>이 열릴 것이다.</div></div>
+  </div>
+  <div class="tools"><button class="btn ghost" id="guessBtn">정답 보기</button></div>
+
+  <div class="mom"><b class="tag">엄마 한마디</b>오른쪽 해석을 같이 읽으면서 밑줄 단어 자리(？)에 들어갈 뜻을 짐작해 보게 해 주세요. 그다음 "정답 보기"를 누르면 ？ 자리에 뜻이 채워져요.</div>
+
+  <h3>📋 8과 단어 30개 <span style="font-weight:400;color:var(--muted);font-size:14px">(본문 장면 순서)</span></h3>
+  <div class="tools">
+    <button class="btn" id="hideM">뜻 가리기</button>
+    <button class="btn" id="hideW">영어 가리기</button>
+  </div>
+  <div class="wrap">
+    <table id="words">
+      <thead><tr><th>단어</th><th>뜻</th><th>본문 속 문장</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+  <div class="mom"><b class="tag">엄마 한마디</b>"뜻 가리기"를 누르고 단어를 하나씩 물어보세요. 가린 칸을 누르면 그 칸만 보여요. 다 맞히면 "영어 가리기"로 거꾸로 물어봐요.</div>
+</section>
+
+<section id="s3">
+  <h2>③ 본문 A Butterfly That Changed the Future</h2>
+  <p class="page">교과서 139~144쪽 · 미래를 바꾼 나비</p>
+
+  <h3>👥 먼저 등장인물부터 <span style="font-weight:400;color:var(--muted);font-size:14px">(138쪽 Read Ahead)</span></h3>
+  <div class="cast">
+    <div><span>🧑</span><b>Eckels</b>에클스 · 공룡을 보고 싶은 손님</div>
+    <div><span>👔</span><b>Mr. Parker</b>파커 씨 · 타임 트래블 회사를 세운 사람</div>
+    <div><span>🧭</span><b>Travis</b>트래비스 · 여행 가이드</div>
+    <div><span>🧳</span><b>two other travelers</b>다른 여행자 두 명</div>
+    <div><span>📺</span><b>Mr. Keith</b>키스 씨 · TV 뉴스 속 새 대통령</div>
+    <div><span>🦖</span><b>T. rex</b>티라노사우루스</div>
+  </div>
+  <div class="mom"><b class="tag">엄마 한마디</b>소설은 등장인물을 먼저 알면 쉬워요(교과서 Reading Tip). 위 여섯을 같이 읽고 시작해 주세요.</div>
+
+  <div class="scenes" id="scenePills"></div>
+  <div id="sceneBox"></div>
+</section>
+<section id="s4">
+  <h2>④ 줄거리 정리</h2>
+  <p class="page">교과서 145~147쪽</p>
+
+  <h3>🧩 A. 줄거리 빈칸 채우기 <span style="font-weight:400;color:var(--muted);font-size:14px">(145쪽 Read and Complete)</span></h3>
+  <div class="mom"><b class="tag">엄마 한마디</b>빈칸에 들어갈 영어 단어를 아들이 직접 쳐 보게 해 주세요. 모르면 ③ 본문의 그 장면을 다시 보면 돼요. 다 쓰면 "채점하기"를 눌러요.</div>
+  <div class="plot" id="plot"></div>
+  <div class="tools"><button class="btn" id="plotCheck">채점하기</button><button class="btn ghost" id="plotAns">정답 보기</button><span id="plotScore" class="score"></span></div>
+
+  <h3>🗣️ B. 누가 한 말일까? <span style="font-weight:400;color:var(--muted);font-size:14px">(146쪽 Read and Choose)</span></h3>
+  <div class="who" id="who"></div>
+
+  <h3>💬 C. 가장 재미있었던 부분 말하기 <span style="font-weight:400;color:var(--muted);font-size:14px">(146쪽 Share Your Ideas)</span></h3>
+  <div class="pattern">
+    <div><button class="say" data-say="Which part of the story did you find most interesting?">🔊</button><b>Which part of the story did you find most interesting?</b></div>
+    <div style="color:var(--muted);font-size:14px">이야기에서 어느 부분이 가장 재미있었나요?</div>
+    <div style="margin-top:10px"><button class="say" data-say="After Eckels returned to the present, he found some unthinkable changes and got confused. I found that part most interesting.">🔊</button>After Eckels returned to the present, he found some unthinkable changes and got confused. I found that part most interesting.</div>
+    <div style="color:var(--muted);font-size:14px">에클스가 현재로 돌아온 뒤 상상도 못 한 변화들을 발견하고 혼란스러워했어요. 저는 그 부분이 가장 재미있었어요.</div>
+  </div>
+  <div class="mom"><b class="tag">엄마 한마디</b>엄마가 위 질문을 영어로 물어보고, 아들은 예시처럼 <b>I found that part most interesting.</b>으로 끝나게 답해 보게 해 주세요. 우리말로 먼저 말해도 괜찮아요.</div>
+
+  <h3>🎭 D. 역할 나눠 읽기 <span style="font-weight:400;color:var(--muted);font-size:14px">(147쪽 Reading Project 인형극을 집에서)</span></h3>
+  <div class="mom"><b class="tag">집에서 해 보기</b>교과서에서는 여섯 명이 모둠을 만들어 인형극을 해요. 집에서는 <b>아들은 Eckels</b>, <b>엄마는 Travis와 Mr. Parker</b>를 맡아서 ③ 본문의 따옴표(“ ”) 대사만 번갈아 읽어 보세요. 해설 부분은 🔊로 들으면 돼요.</div>
+</section>
+<section id="s5">
+  <h2>⑤ 문법 Language in Use</h2>
+  <p class="page">교과서 148~149쪽</p>
+
+  <!-- 문법 1 -->
+  <div class="gcard">
+    <div class="ghead"><span class="gno">문법 1</span>현재완료 <b>have + 과거분사</b></div>
+    <div class="gkey"><button class="say" data-say="I've never seen such a huge thing.">🔊</button>I<b>’ve</b> never <b>seen</b> such a huge thing.
+      <div class="ko">나는 이렇게 거대한 것은 한 번도 <b>본 적이 없어</b>. (본문 장면 4)</div></div>
+    <div class="easy">
+      <p>👉 <b>과거에 있었던 일이 지금까지 이어질 때</b> 써요. 모양은 <b>have(has) + 과거분사</b>예요.</p>
+      <p>👉 I have → <b>I’ve</b>, he has → <b>he’s</b>처럼 줄여 쓰기도 해요. 주어가 he, she, it, 이름 하나면 <b>has</b>를 써요.</p>
+    </div>
+    <div class="uses">
+      <div><span class="ut">완료</span><small>막 ~했다 · just, already</small>
+        <p><button class="say" data-say="You are late. The concert has already started.">🔊</button>You are late. The concert <b>has already started</b>.</p>
+        <div class="ko">너 늦었어. 콘서트가 벌써 시작했어.</div></div>
+      <div><span class="ut">계속</span><small>~해 왔다 · for, since</small>
+        <p><button class="say" data-say="My uncle has lived in Canada since 2010.">🔊</button>My uncle <b>has lived</b> in Canada since 2010.</p>
+        <div class="ko">우리 삼촌은 2010년부터 캐나다에서 살고 있어.</div></div>
+      <div><span class="ut">경험</span><small>~한 적 있다 · ever, never, before</small>
+        <p><button class="say" data-say="Have you been to Jeju-do before?">🔊</button><b>Have</b> you <b>been</b> to Jeju-do before?</p>
+        <div class="ko">너 전에 제주도에 가 본 적 있니?</div></div>
+    </div>
+    <details class="pp"><summary>📌 이번 과에 나오는 과거분사 모음 (눌러서 보기)</summary>
+      <table><thead><tr><th>원래 말</th><th>과거</th><th>과거분사</th><th>뜻</th></tr></thead><tbody>
+        <tr><td>be</td><td>was/were</td><td><b>been</b></td><td>~이다, 있다</td></tr>
+        <tr><td>see</td><td>saw</td><td><b>seen</b></td><td>보다</td></tr>
+        <tr><td>eat</td><td>ate</td><td><b>eaten</b></td><td>먹다</td></tr>
+        <tr><td>meet</td><td>met</td><td><b>met</b></td><td>만나다</td></tr>
+        <tr><td>run</td><td>ran</td><td><b>run</b></td><td>달리다</td></tr>
+        <tr><td>swim</td><td>swam</td><td><b>swum</b></td><td>수영하다</td></tr>
+        <tr><td>arrive</td><td>arrived</td><td><b>arrived</b></td><td>도착하다</td></tr>
+        <tr><td>finish · learn · live · want · play</td><td>-ed</td><td><b>-ed</b> (과거와 같아요)</td><td>끝내다 · 배우다 · 살다 · 원하다 · 놀다</td></tr>
+      </tbody></table></details>
+    <div class="mom"><b class="tag">엄마 한마디</b>본문에도 현재완료가 두 번 더 나와요. <b>I’ve always wanted</b> to see a dinosaur.(장면 1), <b>We’ve just arrived</b> in the jungle.(장면 2) 같이 찾아보면 좋아요.</div>
+
+    <h3>✍️ Use It: SNS 글 완성하기 <span class="mini">(finish · learn · be 를 알맞게 바꿔 쓰기)</span></h3>
+    <div class="plot" id="sns"></div>
+    <div class="tools"><button class="btn" id="snsCheck">채점하기</button><button class="btn ghost" id="snsAns">정답 보기</button><span id="snsScore" class="score"></span></div>
+
+    <h3>🙋 Play Time: Have you ~? <span class="mini">(엄마랑 서로 묻고 답하기)</span></h3>
+    <div class="pattern" style="font-size:16px">
+      <div><button class="say" data-say="Have you eaten malatang before?">🔊</button>A: <b>Have you eaten</b> malatang before? <span class="ko">마라탕 먹어 본 적 있어?</span></div>
+      <div><button class="say" data-say="Yes, I have. No, I haven't.">🔊</button>B: Yes, I have. / No, I haven’t. <span class="ko">응, 있어. / 아니, 없어.</span></div>
+    </div>
+    <div class="wrap" style="margin-top:10px"><table class="exp" id="exp">
+      <thead><tr><th>Have you ~ ?</th><th>나</th><th>엄마</th></tr></thead><tbody></tbody></table></div>
+    <div class="mom"><b class="tag">엄마 한마디</b>한 줄씩 🔊로 질문을 듣고, 서로 영어로 묻고 답한 뒤 Yes/No를 눌러요. 둘 다 Yes인 줄은 ⭐이 떠요.</div>
+  </div>
+
+  <!-- 문법 2 -->
+  <div class="gcard">
+    <div class="ghead"><span class="gno">문법 2</span><b>something + 형용사</b></div>
+    <div class="gkey"><button class="say" data-say="I don't want you to do anything foolish.">🔊</button>I don’t want you to do <b>anything foolish</b>.
+      <div class="ko">나는 네가 <b>어리석은 일</b>은 하나도 하지 않았으면 해. (본문 장면 3)</div></div>
+    <div class="easy">
+      <p>👉 <b>-thing</b>으로 끝나는 말(something, anything, nothing, everything)은 꾸며 주는 말(형용사)이 <b>뒤</b>에 와요.</p>
+      <div class="vs"><div class="bad">✗ foolish anything</div><div class="good">○ anything foolish</div></div>
+      <p>👉 보통 말은 형용사가 앞에 와요: a <b>huge</b> thing. 하지만 something은 뒤로: something <b>huge</b>.</p>
+    </div>
+    <div class="uses">
+      <div><p><button class="say" data-say="I saw something strange in the dark.">🔊</button>I saw <b>something strange</b> in the dark.</p><div class="ko">나는 어둠 속에서 이상한 무언가를 봤어.</div></div>
+      <div><p><button class="say" data-say="The kids are drawing something funny.">🔊</button>The kids are drawing <b>something funny</b>.</p><div class="ko">아이들이 재미있는 무언가를 그리고 있어.</div></div>
+      <div><p><button class="say" data-say="There's nothing wrong with his answer.">🔊</button>There’s <b>nothing wrong</b> with his answer.</p><div class="ko">그의 답에는 틀린 것이 하나도 없어.</div></div>
+    </div>
+    <div class="mom"><b class="tag">엄마 한마디</b>본문 장면 2에도 있어요: cause <b>something unthinkable</b> (상상도 할 수 없는 일을 일으키다).</div>
+
+    <h3>🧱 Use It: 단어 순서대로 놓기 <span class="mini">(단어를 눌러 차례로 놓아요. 놓은 단어를 누르면 빠져요)</span></h3>
+    <div id="order"></div>
+  </div>
+
+  <!-- 온라인 놀이 -->
+  <div class="gcard">
+    <div class="ghead"><span class="gno">놀이</span>Meet the T. Rex Family 🦖</div>
+    <p class="mini" style="margin:0 0 8px">두 문장 중 <b>어법이 맞는 문장</b>을 누르면 한 칸씩 T. rex 가족에게 다가가요. (149쪽 Online Play)</p>
+    <div class="trail" id="trail"></div>
+    <div id="tq"></div>
+  </div>
+</section>
+<section id="s6">
+  <h2>⑥ 써 보기 Think and Write</h2>
+  <p class="page">교과서 150~151쪽 · 쓴 글은 이 컴퓨터에 저절로 저장돼요</p>
+
+  <div class="gcard">
+    <div class="ghead"><span class="gno">1</span>이야기 이어 쓰기</div>
+    <p class="mini" style="margin:0 0 10px">현재로 돌아온 에클스에게 그다음 무슨 일이 생겼을까요? 만화 세 칸의 말풍선을 채워 이야기를 이어 써요.</p>
+
+    <h3 style="margin-top:6px">Step 1 · Plan 만화 계획하기</h3>
+    <div class="comic">
+      <div class="panel"><div class="pic">😱</div><p>Eckels found some changes in the present and was shocked.</p><div class="ko">에클스는 현재에서 몇 가지 변화를 발견하고 충격을 받았다.</div></div>
+      <div class="panel"><div class="pic">🧑❓🧭</div><p>Eckels went to Travis to ask what he could do.</p><div class="ko">에클스는 자기가 무엇을 할 수 있는지 물어보려고 트래비스에게 갔다.</div></div>
+      <div class="panel"><div class="pic">🏙️😲</div><p>Eckels went outside and saw something unthinkable.</p><div class="ko">에클스는 밖으로 나가서 상상도 할 수 없는 무언가를 보았다.</div></div>
+    </div>
+
+    <h3>Step 2 · Write 이어 쓰기</h3>
+    <div class="story-w">
+      <p>Eckels found some changes in the present and was shocked.
+        “<input class="wi" data-k="w1" placeholder="에클스가 혼잣말로 한 말">” he said to himself.</p>
+      <p>He went to Travis to ask what he could do.
+        “<input class="wi" data-k="w2" placeholder="에클스가 트래비스에게 한 질문">” asked Eckels.</p>
+      <p>“<input class="wi" data-k="w3" placeholder="트래비스의 대답">” said Travis.</p>
+      <p>Eckels went outside and saw something unthinkable.
+        “<input class="wi" data-k="w4" placeholder="밖에서 무엇을 보고 한 말">” he said.</p>
+    </div>
+    <div class="tools">
+      <button class="btn ghost" id="wEx">교과서 예시 보기</button>
+      <button class="btn" id="wRead">🔊 내 이야기 듣기</button>
+    </div>
+    <div class="exbox" id="wExBox" hidden>
+      <b>교과서 만화 속 말풍선</b>
+      <p>① <button class="say" data-say="The world has changed because of me!">🔊</button>The world has changed because of me! <span class="ko">나 때문에 세상이 바뀌어 버렸어!</span></p>
+      <p>② <button class="say" data-say="What can I do to fix the problem?">🔊</button>What can I do to fix the problem? <span class="ko">이 문제를 바로잡으려면 제가 뭘 할 수 있죠?</span></p>
+      <p>③ <button class="say" data-say="Well, there's nothing you can do.">🔊</button>Well, there’s nothing you can do. <span class="ko">글쎄요, 당신이 할 수 있는 건 아무것도 없어요.</span></p>
+      <p>④ <span class="mini">(교과서는 비어 있어요. 이런 식으로 써 볼 수 있어요)</span><br>
+        <button class="say" data-say="I've never seen such a strange city! Everything has changed!">🔊</button>I’ve never seen such a strange city! Everything has changed! <span class="ko">이렇게 이상한 도시는 처음 봐! 모든 게 변해 버렸어!</span></p>
+    </div>
+
+    <h3>스스로 점검하기 <span class="mini">(Self-check · 엄마랑 Peer-check)</span></h3>
+    <div class="check">
+      <label><input type="checkbox" data-k="c1"> 상상력을 발휘해 이야기를 썼나요?</label>
+      <label><input type="checkbox" data-k="c2"> 현재완료와 「something + 형용사」를 바르게 썼나요?</label>
+      <label><input type="checkbox" data-k="c3"> 철자와 구두점(. , ? !)을 바르게 썼나요?</label>
+    </div>
+    <div class="mom"><b class="tag">엄마 한마디</b>Step 3(Peer-edit)는 짝 대신 엄마가 읽어 주세요. 잘 쓴 점 하나, 고칠 점 하나를 말해 주고 다시 써 보게 하면 돼요. 이번 과 문법(<b>have + 과거분사</b>, <b>something + 형용사</b>)을 한 번이라도 넣어 보라고 해 주세요.</div>
+  </div>
+
+  <div class="gcard">
+    <div class="ghead"><span class="gno">2</span>10년 뒤의 나에게 편지 쓰기</div>
+    <p class="mini" style="margin:0 0 10px">151쪽 Create · 교과서 예시(Mina의 편지)를 먼저 읽고, 내 편지를 써요.</p>
+    <div class="letter">
+      <p><b>Dear Future Me,</b></p>
+      <p>Hi. How are you? I’m now in the second grade in middle school. You’ve always wanted to be a pilot. I hope your dream has come true. Hope you’re happy.</p>
+      <p>With love,<br>Mina</p>
+      <div class="ko">10년 뒤의 나에게, 안녕. 잘 지내? 나는 지금 중학교 2학년이야. 너는 늘 비행기 조종사가 되고 싶어 했지. 네 꿈이 이루어졌기를 바라. 행복하길 바라. 사랑을 담아, 미나가</div>
+      <button class="btn ghost" style="margin-top:8px" id="minaRead">🔊 Mina 편지 듣기</button>
+    </div>
+
+    <h3>✉️ 내 편지</h3>
+    <div class="story-w">
+      <p><b>Dear Future Me,</b></p>
+      <p>Hi. How are you? I’m now in the second grade in middle school.
+        You’ve always wanted to be <input class="wi" data-k="dream" placeholder="a(n) + 꿈 (예: a game designer)" style="width:15em">.
+        I hope your dream has come true.
+        <input class="wi" data-k="more" placeholder="더 하고 싶은 말 (써도 되고 안 써도 돼요)" style="width:22em"></p>
+      <p>Hope you’re happy.</p>
+      <p>With love,<br><input class="wi" data-k="name" placeholder="영어 이름" style="width:9em"></p>
+    </div>
+    <div class="tools"><button class="btn" id="lRead">🔊 내 편지 듣기</button><button class="btn ghost" id="lPrint">🖨️ 편지만 인쇄하기</button></div>
+    <div class="mom"><b class="tag">엄마 한마디</b>꿈을 영어로 모르면 같이 찾아 주세요. 예: a doctor(의사), a soccer player(축구 선수), a YouTuber(유튜버), a programmer(프로그래머). 교과서처럼 편지를 인쇄해서 타임캡슐 상자에 넣어 두면 좋은 추억이 돼요.</div>
+  </div>
+</section>
+<div id="printLetter" class="print-only"></div>
+<section id="s7">
+  <h2>⑦ 마무리 Review</h2>
+  <p class="page">교과서 152~153쪽 · 이 단원에서 배운 것을 확인해요</p>
+
+  <div class="mom"><b class="tag">엄마 한마디</b>책을 덮고 혼자 풀게 해 주세요. 문제마다 채점 단추가 있어요. 틀린 문제는 ③ 본문이나 ⑤ 문법으로 돌아가서 다시 보면 돼요.</div>
+  <div class="legend"><span>⭕ 맞은 답</span><span>❌ 틀린 답 (줄이 그어져요)</span><span><b class="ans-tag">정답 ○○</b> 초록 표가 정답</span></div>
+
+  <div class="gcard">
+    <div class="ghead"><span class="gno">Big Idea</span>언어 형식 고르기</div>
+    <div class="pick" id="pick0"></div>
+  </div>
+
+  <div class="gcard">
+    <div class="ghead"><span class="gno">Words</span>단어와 읽기</div>
+
+    <h3 style="margin-top:4px">1. 빈칸에 알맞은 단어를 〈보기〉에서 골라 쓰기</h3>
+    <div class="bogi">보기 · terrified · whisper · cause · founder</div>
+    <div class="plot" id="r1"></div>
+    <div class="tools"><button class="btn" id="r1Check">채점하기</button><button class="btn ghost" id="r1Ans">정답 보기</button><span id="r1Score" class="score"></span></div>
+
+    <h3>2. 빈칸에 at · by · in 중 알맞은 말 쓰기</h3>
+    <div class="plot" id="r2"></div>
+    <div class="tools"><button class="btn" id="r2Check">채점하기</button><button class="btn ghost" id="r2Ans">정답 보기</button><span id="r2Score" class="score"></span></div>
+
+    <h3>3. 이야기 순서대로 누르기 <span class="mini">(먼저 일어난 일부터 차례로 눌러요)</span></h3>
+    <div class="seq" id="seq"></div>
+    <div class="tools"><button class="btn ghost" id="seqReset">다시 하기</button><span id="seqMsg" class="score"></span></div>
+
+    <h3>4. 본문 내용과 맞으면 T, 틀리면 F</h3>
+    <div class="pick" id="tf"></div>
+  </div>
+
+  <div class="gcard">
+    <div class="ghead"><span class="gno">Grammar</span>문법과 쓰기</div>
+
+    <h3 style="margin-top:4px">5. 주어진 단어로 현재완료 문장 완성하기</h3>
+    <div class="bogi">예시 · Anna <b>has been</b> sick since Monday. <span class="mini">(애나는 월요일부터 계속 아파.)</span></div>
+    <div class="plot" id="r5"></div>
+    <div class="tools"><button class="btn" id="r5Check">채점하기</button><button class="btn ghost" id="r5Ans">정답 보기</button><span id="r5Score" class="score"></span></div>
+
+    <h3>6. 그림을 보고 something + 형용사로 쓰기 <span class="mini">(cold · sweet · warm)</span></h3>
+    <div class="bogi">예시 · 🥱 Tim is bored. He wants to do <b>something fun</b>. <span class="mini">(팀은 심심해. 그는 재미있는 걸 하고 싶어.)</span></div>
+    <div class="plot" id="r6"></div>
+    <div class="tools"><button class="btn" id="r6Check">채점하기</button><button class="btn ghost" id="r6Ans">정답 보기</button><span id="r6Score" class="score"></span></div>
+
+    <h3>7. 친구들에게 소개하고 싶은 특별한 경험 두 가지 쓰기</h3>
+    <div class="bogi">예시 · I <b>have run</b> a half marathon before. <span class="mini">(나는 전에 하프 마라톤을 뛰어 본 적이 있어.)</span></div>
+    <div class="story-w" id="r7">
+      <p>① <input class="wi" data-k="e1" placeholder="I have ~ before."></p>
+      <p>② <input class="wi" data-k="e2" placeholder="I have ~ before."></p>
+    </div>
+    <div class="mom"><b class="tag">엄마 한마디</b>정답이 없는 문제예요. <b>I have + 과거분사</b> 모양이 맞는지만 같이 봐 주세요. ⑤ 문법의 과거분사 표를 보면 도움이 돼요.</div>
+  </div>
+
+  <div class="gcard">
+    <div class="ghead"><span class="gno">Check</span>스스로 평가하기 <span class="mini">Check Yourself</span></div>
+    <div class="self" id="self">
+      <div data-k="s1"><p><b>Words and Reading</b><br>시간 여행을 주제로 한 이야기를 읽고, 글의 흐름을 파악할 수 있어요.</p>
+        <span class="faces"><button>😊</button><button>🙂</button><button>😥</button></span></div>
+      <div data-k="s2"><p><b>Grammar and Writing</b><br>이 단원에서 배운 언어 형식을 써서 본문 이야기를 이어 쓸 수 있어요.</p>
+        <span class="faces"><button>😊</button><button>🙂</button><button>😥</button></span></div>
+    </div>
+  </div>
+
+  <div class="finish">
+    <div class="e">🦋</div>
+    <b>Lesson 8 끝! 정말 수고했어!</b>
+    <p>A little change can cause something unthinkable. 작은 노력도 큰 변화를 만들어요.</p>
+  </div>
+</section>
+</main>
+
+<script>
+// 단어: [장면, 단어, 뜻, 본문 문장(단어는 *로 감쌈)]
+const WORDS = [
+ [1,"president","대통령","Mr. Keith, the new *president*, was on the news."],
+ [1,"founder","설립자","said Mr. Parker, the *founder* of Time Travel."],
+ [1,"dinosaur","공룡","I've always wanted to see a *dinosaur*."],
+ [1,"jungle","정글, 밀림","We can take you back to the *jungle* of 60 million years ago."],
+ [1,"million","백만","the jungle of 60 *million* years ago"],
+ [1,"instruction","지시, 설명","To stay safe, you must follow his *instructions*."],
+ [2,"path","길","Do you see the *path* over there?"],
+ [2,"at any time","언제라도","You must not leave it *at any time*."],
+ [2,"by accident","실수로, 우연히","You might kill something *by accident*."],
+ [2,"cause","일으키다","A little change here can *cause* something unthinkable in the future."],
+ [2,"unthinkable","상상도 할 수 없는","something *unthinkable* in the future"],
+ [3,"be covered in","~로 덮여 있다","The jungle *was covered in* fog."],
+ [3,"fog","안개","The jungle was covered in *fog*."],
+ [3,"foolish","어리석은","I don't want you to do anything *foolish*."],
+ [4,"whisper","속삭이다","Travis *whispered*, \"Look over there.\""],
+ [4,"appear","나타나다","A T. rex slowly *appeared*."],
+ [4,"scared","무서워하는","I'm so *scared*."],
+ [4,"breathe","숨 쉬다","I can't *breathe*."],
+ [4,"panic","겁에 질려 어쩔 줄 모르다","Don't *panic*, Eckels."],
+ [4,"terrified","겁에 질린","He was so *terrified* that he left the path by accident."],
+ [4,"toward","~쪽으로","The T. rex turned its head *toward* him."],
+ [4,"silence","침묵, 고요","There was a moment of *silence*."],
+ [4,"suddenly","갑자기","It *suddenly* started to run toward them."],
+ [4,"roar","으르렁거리는 소리","with a loud *roar*"],
+ [5,"put ~ in danger","~을 위험에 빠뜨리다","You *put* all of us *in danger*."],
+ [5,"mud","진흙","There's only a little *mud* on my shoes."],
+ [5,"stare","빤히 쳐다보다","Travis *stared* at Eckels for a long time."],
+ [6,"except","~을 제외하고","Everything looked the same, *except* the big sign on the wall."],
+ [6,"confused","혼란스러운","Eckels was *confused*."],
+ [6,"shocked","충격을 받은","He was *shocked*."]
+];
+const SCENE = ["","장면 1 · 타임트래블 사무실 (139쪽)","장면 2 · 6천만 년 전 정글에 도착 (140쪽)","장면 3 · 안개 낀 정글 (141쪽)",
+  "장면 4 · T. rex가 나타나다 (142쪽)","장면 5 · 타임머신으로 돌아오다 (143쪽)","장면 6 · 달라진 현재 (144쪽)"];
+
+const tb = document.querySelector("#words tbody");
+let last = 0, html = "";
+const esc = s => s.replace(/&/g,"&amp;").replace(/</g,"&lt;");
+for (const [sc,w,m,ex] of WORDS){
+  if (sc !== last){ html += `<tr class="scene"><td colspan="3">${SCENE[sc]}</td></tr>`; last = sc; }
+  const plain = ex.replace(/\*/g,"");
+  const exH = esc(ex).replace(/\*(.+?)\*/g,"<b>$1</b>");
+  html += `<tr><td class="w"><button class="say" data-say="${w.replace("~","")}">🔊</button><span>${esc(w)}</span></td>
+    <td class="m"><span>${m}</span></td>
+    <td class="ex"><button class="say" data-say="${esc(plain).replace(/"/g,"&quot;")}">🔊</button>${exH}</td></tr>`;
+}
+tb.innerHTML = html;
+
+// 칸 넘기기
+const nav = document.getElementById("nav");
+nav.addEventListener("click", e => {
+  const b = e.target.closest("button"); if (!b) return;
+  nav.querySelectorAll("button").forEach(x => x.classList.toggle("on", x === b));
+  document.querySelectorAll("section").forEach(s => s.classList.toggle("on", s.id === b.dataset.go));
+  window.scrollTo({top:0});
+});
+
+// 읽어 주기: 원어민 목소리(자연스러운 목소리)를 먼저 고르고, 한국어 목소리로는 절대 읽지 않음
+const PREFER = [/Ava.*Natural/i,/Jenny.*Natural/i,/Aria.*Natural/i,/Emma.*Natural/i,/Andrew.*Natural/i,/Guy.*Natural/i,
+  /Natural/i,/Google US English/i,/Samantha/i,/Google UK English Female/i,/Microsoft Zira/i,/Microsoft David/i];
+const voiceSel = document.getElementById("voice");
+const voiceNote = document.getElementById("voiceNote");
+let enVoices = [];
+function loadVoices(){
+  enVoices = speechSynthesis.getVoices().filter(v => /^en[-_](US|GB)/i.test(v.lang));
+  if (!enVoices.length){ voiceSel.hidden = true; voiceNote.hidden = false; return; }
+  const score = v => { const i = PREFER.findIndex(r => r.test(v.name)); return (i < 0 ? 99 : i) + (/en[-_]US/i.test(v.lang) ? 0 : .5); };
+  enVoices.sort((a,b) => score(a) - score(b));
+  let saved = ""; try { saved = localStorage.getItem("u8voice") || ""; } catch(e){}
+  voiceSel.innerHTML = enVoices.map(v => `<option value="${esc(v.name)}">${esc(v.name.replace(/^Microsoft |Online \(Natural\) - /g,"").replace(/\s*\(.*\)/,""))}</option>`).join("");
+  if (enVoices.some(v => v.name === saved)) voiceSel.value = saved;
+  voiceSel.hidden = false; voiceNote.hidden = true;
+}
+if ("speechSynthesis" in window){
+  loadVoices();
+  speechSynthesis.addEventListener("voiceschanged", loadVoices);
+}
+voiceSel.addEventListener("change", () => {
+  try { localStorage.setItem("u8voice", voiceSel.value); } catch(e){}
+  speak("Hello! I'm your English reading voice.");
+});
+function speak(t){
+  if (!("speechSynthesis" in window)) return;
+  const v = enVoices.find(v => v.name === voiceSel.value) || enVoices[0];
+  if (!v){ voiceNote.hidden = false; voiceNote.animate([{transform:"scale(1.06)"},{transform:"scale(1)"}],300); return; }
+  if (playing) stopAll();
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(t);
+  u.voice = v; u.lang = v.lang; u.rate = (/Natural/i.test(v.name) ? 0.95 : 0.9) * speed;
+  speechSynthesis.speak(u);
+}
+
+// 읽기 속도: 보통 · 천천히 · 아주 천천히 (고른 것 기억)
+const speedBox = document.getElementById("speed");
+let speed = 1;
+function setSpeed(r){
+  speed = r;
+  speedBox.querySelectorAll("button").forEach(b => b.classList.toggle("on", +b.dataset.r === r));
+}
+try { const s = +localStorage.getItem("u8speed"); if (s) setSpeed(s); } catch(e){}
+speedBox.addEventListener("click", e => {
+  const b = e.target.closest("button"); if (!b) return;
+  setSpeed(+b.dataset.r);
+  try { localStorage.setItem("u8speed", b.dataset.r); } catch(e){}
+});
+document.addEventListener("click", e => {
+  const s = e.target.closest(".say"); if (s) { speak(s.dataset.say); return; }
+  const cell = e.target.closest("td.m span, td.w span"); if (cell) cell.classList.toggle("peek");
+});
+
+// 신문 기사 정답
+document.getElementById("guessBtn").addEventListener("click", e => {
+  const g = document.querySelectorAll("#guess .g");
+  const open = !g[0].classList.contains("open");
+  g.forEach(x => x.classList.toggle("open", open));
+  e.target.textContent = open ? "정답 숨기기" : "정답 보기";
+});
+
+// 뜻·영어 가리기
+function toggler(id, cls, on, off){
+  const b = document.getElementById(id);
+  b.addEventListener("click", () => {
+    const t = document.getElementById("words");
+    const now = t.classList.toggle(cls);
+    t.querySelectorAll(".peek").forEach(x => x.classList.remove("peek"));
+    b.textContent = now ? off : on;
+  });
+}
+toggler("hideM","hide-m","뜻 가리기","뜻 보이기");
+toggler("hideW","hide-w","영어 가리기","영어 보이기");
+
+/* ③ 본문: 장면마다 [영어, 해석, 문법표시] */
+const STORY = [
+ {t:"타임 트래블 사무실", p:"139쪽", story:"공룡을 보고 싶은 에클스가 시간 여행 회사를 찾아가요.", s:[
+  ["Eckels walked into the office of Time Travel.","에클스는 타임 트래블 사무실로 걸어 들어갔다."],
+  ["The big sign on the wall said, “NAME ANY YEAR IN THE PAST. WE TAKE YOU THERE.”","벽에 걸린 큰 간판에는 “과거의 어느 해든 말하세요. 저희가 그곳으로 데려다 드립니다.”라고 쓰여 있었다."],
+  ["There was a TV on the wall, and Mr. Keith, the new president, was on the news.","벽에는 TV가 있었고, 새 대통령인 키스 씨가 뉴스에 나오고 있었다."],
+  ["“How can we help you?” said Mr. Parker, the founder of Time Travel.","“무엇을 도와드릴까요?” 타임 트래블의 설립자인 파커 씨가 말했다."],
+  ["“I’ve always wanted to see a dinosaur. Is it possible?” asked Eckels.","“저는 항상 공룡을 보고 싶었어요. 가능한가요?” 에클스가 물었다.","현재완료"],
+  ["“Sure,” said Mr. Parker. “We can take you back to the jungle of 60 million years ago.”","“물론이죠.” 파커 씨가 말했다. “저희가 손님을 6천만 년 전의 정글로 데려다 드릴 수 있어요.”"],
+  ["“Great,” said Eckels. “Can you take me there now?”","“좋아요.” 에클스가 말했다. “지금 저를 그곳에 데려다줄 수 있나요?”"],
+  ["“You’re lucky. There’s a time machine that leaves in 10 minutes,” said Mr. Parker.","“운이 좋으시네요. 10분 뒤에 출발하는 타임머신이 있어요.” 파커 씨가 말했다."],
+  ["“This is Travis, your travel guide,” he continued.","“이분은 손님의 여행 가이드인 트래비스예요.” 그가 말을 이었다."],
+  ["“To stay safe, you must follow his instructions.”","“안전하려면 이 사람의 지시를 꼭 따라야 해요.”"]],
+  q:[["Q1","Who was on the news?","누가 뉴스에 나왔나요?","Mr. Keith, the new president, was on the news.","새 대통령인 키스 씨가 뉴스에 나왔다."],
+     ["Q2","What did Mr. Parker tell Eckels to follow?","파커 씨는 에클스에게 무엇을 따르라고 했나요?","He told Eckels to follow Travis’s instructions.","트래비스의 지시를 따르라고 했다."]]},
+ {t:"6천만 년 전 정글에 도착", p:"140쪽", story:"트래비스가 절대 길을 벗어나지 말라고 주의를 줘요.", s:[
+  ["Inside the time machine, there were two other travelers.","타임머신 안에는 다른 여행자 두 명이 있었다."],
+  ["Eckels sat down and closed his eyes.","에클스는 앉아서 눈을 감았다."],
+  ["He felt the machine moving under his feet.","그는 발밑에서 기계가 움직이는 것을 느꼈다."],
+  ["After only a few minutes, the machine stopped.","겨우 몇 분 뒤에 기계가 멈췄다."],
+  ["“We’ve just arrived in the jungle of 60 million years ago,” Travis explained.","“우리는 방금 6천만 년 전의 정글에 도착했어요.” 트래비스가 설명했다.","현재완료"],
+  ["“Do you see the path over there? You must not leave it at any time.","“저쪽에 길이 보이죠? 어느 때라도 그 길을 벗어나면 절대 안 돼요."],
+  ["Do not touch anything. You might kill something by accident.","아무것도 만지지 마세요. 실수로 무언가를 죽일지도 몰라요."],
+  ["A little change here can cause something unthinkable in the future.”","여기서의 작은 변화가 미래에 상상도 할 수 없는 일을 일으킬 수 있어요.”","something+형용사"]],
+  q:[["Q3","Where did the time machine arrive?","타임머신은 어디에 도착했나요?","It arrived in the jungle of 60 million years ago.","6천만 년 전의 정글에 도착했다."],
+     ["Think!","Travis said, “A little change here can cause something unthinkable in the future.” What do you think he meant?","트래비스의 이 말은 무슨 뜻이었을까요?",null,"과거에서 아주 작은 것 하나만 바뀌어도 미래가 상상도 못 할 만큼 크게 달라질 수 있다는 뜻이에요. (정답이 하나는 아니에요. 아들 생각을 먼저 들어 보세요.)"]]},
+ {t:"안개 낀 정글", p:"141쪽", story:"모두 타임머신에서 내려 길을 따라 걷기 시작해요.", s:[
+  ["Slowly, everyone got out of the time machine.","천천히 모두가 타임머신에서 내렸다."],
+  ["The jungle was covered in fog.","정글은 안개로 덮여 있었다."],
+  ["It was very quiet.","아주 조용했다."],
+  ["“I’m so excited,” said Eckels.","“너무 신나요.” 에클스가 말했다."],
+  ["“Be careful. Some of the dinosaurs are hungry,” said Travis.","“조심하세요. 공룡들 중 몇 마리는 배가 고파요.” 트래비스가 말했다."],
+  ["“Just stay calm. I don’t want you to do anything foolish.”","“그냥 침착하게 있어요. 나는 당신이 어리석은 일은 하나도 하지 않았으면 해요.”","something+형용사"],
+  ["“Don’t worry. I’m not a fool,” said Eckels.","“걱정 마세요. 저는 바보가 아니에요.” 에클스가 말했다."],
+  ["They all began to walk on the path.","그들은 모두 길 위를 걷기 시작했다."]],
+  q:[["Q4","What was the jungle covered in?","정글은 무엇으로 덮여 있었나요?","It was covered in fog.","안개로 덮여 있었다."]]},
+ {t:"T. rex가 나타나다", p:"142쪽", story:"거대한 티라노사우루스를 보고 겁에 질린 에클스가 실수로 길을 벗어나요.", s:[
+  ["After some time, Travis whispered, “Look over there. There is a T. rex.”","얼마 뒤, 트래비스가 속삭였다. “저쪽을 보세요. 티라노사우루스가 있어요.”"],
+  ["One hundred meters away, a T. rex slowly appeared.","100미터 떨어진 곳에서 티라노사우루스 한 마리가 천천히 나타났다."],
+  ["“It,” whispered Eckels. “It . . .”","“저, 저건…….” 에클스가 속삭였다. “저건…….”"],
+  ["“Sh!”","“쉿!”"],
+  ["“It . . . is huge. I’ve never seen such a huge thing. I’m so scared,” said Eckels.","“저건…… 거대해요. 저는 이렇게 거대한 것은 한 번도 본 적이 없어요. 너무 무서워요.” 에클스가 말했다.","현재완료"],
+  ["“Sh . . . quiet!” Travis said angrily. “You don’t want it to see you.”","“쉿…… 조용히!” 트래비스가 화를 내며 말했다. “저게 당신을 보면 안 되잖아요.”"],
+  ["“I can’t breathe,” said Eckels. “Get me out of here!”","“숨을 못 쉬겠어요.” 에클스가 말했다. “저를 여기서 꺼내 주세요!”"],
+  ["“Don’t panic, Eckels,” said Travis. “Turn around, and walk quietly back to the machine.”","“겁먹고 허둥대지 마세요, 에클스.” 트래비스가 말했다. “뒤돌아서 기계까지 조용히 걸어 돌아가세요.”"],
+  ["Eckels turned around and started to run.","에클스는 뒤돌아서 뛰기 시작했다."],
+  ["He was so terrified that he left the path by accident.","그는 너무 겁에 질려서 실수로 길을 벗어났다."],
+  ["“Eckels!” shouted Travis. “Don’t leave the path!”","“에클스!” 트래비스가 소리쳤다. “길을 벗어나지 마세요!”"],
+  ["The T. rex heard Travis and turned its head toward him and the other travelers.","티라노사우루스는 트래비스의 소리를 듣고 그와 다른 여행자들 쪽으로 머리를 돌렸다."],
+  ["There was a moment of silence.","잠깐 침묵이 흘렀다."],
+  ["Then, it suddenly started to run toward them with a loud roar.","그러더니 그것이 크게 으르렁거리며 갑자기 그들을 향해 달려오기 시작했다."],
+  ["“Run, everybody! Run!” shouted Travis.","“모두 뛰어요! 뛰어요!” 트래비스가 소리쳤다."]],
+  q:[["Q5","What appeared one hundred meters away?","100미터 떨어진 곳에 무엇이 나타났나요?","A T. rex appeared.","티라노사우루스가 나타났다."],
+     ["Q6","Why did Eckels leave the path by accident?","에클스는 왜 실수로 길을 벗어났나요?","Because he was so terrified.","너무 겁에 질렸기 때문이다."]]},
+ {t:"타임머신으로 돌아오다", p:"143쪽", story:"에클스는 아무것도 죽이지 않았다고 하지만, 신발에 진흙이 묻어 있어요.", s:[
+  ["Travis and the other travelers returned safely to the machine and found Eckels inside.","트래비스와 다른 여행자들은 무사히 기계로 돌아왔고, 안에 있는 에클스를 발견했다."],
+  ["“You put all of us in danger,” said Travis to Eckels in an angry voice.","“당신이 우리 모두를 위험에 빠뜨렸어요.” 트래비스가 화난 목소리로 에클스에게 말했다."],
+  ["“You left the path.”","“당신은 길을 벗어났어요.”"],
+  ["“I’m sorry, but I didn’t kill anything,” said Eckels.","“미안해요. 하지만 저는 아무것도 죽이지 않았어요.” 에클스가 말했다."],
+  ["“There’s only a little mud on my shoes.”","“제 신발에 진흙이 조금 묻었을 뿐이에요.”"],
+  ["Travis stared at Eckels for a long time without saying anything.","트래비스는 아무 말 없이 오랫동안 에클스를 빤히 쳐다보았다."],
+  ["“Let’s go home,” said Travis finally.","“집으로 갑시다.” 마침내 트래비스가 말했다."]],
+  q:[["Q7","According to Eckels, what was on his shoes?","에클스의 말에 따르면, 그의 신발에 무엇이 묻어 있었나요?","There was only a little mud on his shoes.","진흙이 조금 묻어 있었다."],
+     ["Think!","Why do you think Travis stared at Eckels for a long time without saying anything?","트래비스는 왜 아무 말 없이 오랫동안 에클스를 쳐다봤을까요?",null,"에클스가 길을 벗어나면서 과거의 무언가를 바꿨을까 봐 걱정되고 화가 났기 때문일 거예요. (아들 생각을 먼저 들어 보세요.)"]]},
+ {t:"달라진 현재", p:"144쪽", story:"현재로 돌아오니 간판 글자와 대통령이 바뀌어 있어요. 범인은 죽은 나비!", s:[
+  ["The machine stopped.","기계가 멈췄다."],
+  ["They all returned to the present safely.","그들은 모두 무사히 현재로 돌아왔다."],
+  ["“Is everything okay here?” asked Travis.","“여기는 다 괜찮나요?” 트래비스가 물었다."],
+  ["“Fine. Welcome home!” said Mr. Parker.","“좋아요. 잘 돌아왔어요!” 파커 씨가 말했다."],
+  ["Eckels looked around the room carefully.","에클스는 방을 꼼꼼히 둘러보았다."],
+  ["Everything looked the same, except the big sign on the wall.","벽에 걸린 큰 간판만 빼고 모든 것이 똑같아 보였다."],
+  ["The sign now said, “NAIM ANY YEER EN THE PAST. WEE TAEK YU THAIR.”","이제 간판에는 “NAIM ANY YEER EN THE PAST. WEE TAEK YU THAIR.”라고 쓰여 있었다. (처음 간판과 같은 말인데 철자가 다 틀려 있어요!)"],
+  ["Eckels was confused.","에클스는 혼란스러웠다."],
+  ["Then, he saw the TV.","그때 그는 TV를 보았다."],
+  ["The new president was on the news, but it was not Mr. Keith.","새 대통령이 뉴스에 나오고 있었는데, 키스 씨가 아니었다."],
+  ["“What’s going on?” He got more confused.","“무슨 일이지?” 그는 더 혼란스러워졌다."],
+  ["He sat down and looked closely at the mud on his shoes.","그는 앉아서 신발에 묻은 진흙을 자세히 들여다보았다."],
+  ["“No, it can’t be,” said Eckels.","“아니야, 그럴 리가 없어.” 에클스가 말했다."],
+  ["“It’s all because of this little thing?”","“이게 다 이 작은 것 때문이라고?”"],
+  ["He was shocked.","그는 충격을 받았다."],
+  ["In the mud on his right shoe, he found a small dead butterfly.","오른쪽 신발의 진흙 속에서 그는 죽은 작은 나비 한 마리를 발견했다."]],
+  q:[["Q8","What did Eckels find in the mud on his right shoe?","에클스는 오른쪽 신발의 진흙 속에서 무엇을 발견했나요?","He found a small dead butterfly.","죽은 작은 나비 한 마리를 발견했다."],
+     ["Think!","Why do you think Eckels was shocked?","에클스는 왜 충격을 받았을까요?",null,"과거에서 실수로 나비 한 마리를 죽인 것 때문에 현재(간판 철자, 대통령)가 바뀌었다는 걸 알았기 때문이에요. (아들 생각을 먼저 들어 보세요.)"]]}
+];
+const quoteFix = s => s.replace(/[“”]/g,'"').replace(/’/g,"'").replace(/ \. \. \./g,"...");
+let curScene = 0;
+const pills = document.getElementById("scenePills");
+pills.innerHTML = STORY.map((sc,i) => `<button data-i="${i}">장면 ${i+1}</button>`).join("");
+pills.addEventListener("click", e => { const b = e.target.closest("button"); if (b) showScene(+b.dataset.i); });
+
+function showScene(i){
+  stopAll();
+  curScene = i;
+  pills.querySelectorAll("button").forEach((b,j) => b.classList.toggle("on", j === i));
+  const sc = STORY[i];
+  const chips = WORDS.filter(w => w[0] === i+1).map(w => `<span>${esc(w[1])}<i>${w[2]}</i></span>`).join("");
+  const sents = sc.s.map(([e,k,g],j) => `<div class="sent" data-j="${j}"><div class="num">${j+1}</div><div class="body">
+      <div class="e"><button class="say" data-say="${esc(quoteFix(e)).replace(/"/g,"&quot;")}">🔊</button>${esc(e)}${g?`<span class="gram">${g}</span>`:""}</div>
+      <div class="k">${esc(k)}</div><div class="hint">눌러서 뜻 보기</div></div></div>`).join("");
+  const qs = sc.q.map(([tag,qe,qk,ae,ak]) => `<div class="q"><div class="qq"><span class="tag${tag==="Think!"?" think":""}">${tag}</span>
+      ${tag!=="Think!"?`<button class="say" data-say="${esc(qe)}">🔊</button>`:""}${esc(qe)}</div><div class="qk">${qk}</div>
+      <button class="btn ghost qbtn">${tag==="Think!"?"생각 예시 보기":"답 보기"}</button>
+      <div class="qa">${ae?`<button class="say" data-say="${esc(ae)}">🔊</button><b>${esc(ae)}</b><small>${ak}</small>`:ak}</div></div>`).join("");
+  document.getElementById("sceneBox").innerHTML = `<div class="scard">
+    <div class="shead"><div class="p">장면 ${i+1} · ${sc.p}</div><div class="t">${sc.t}</div><div class="story">${sc.story}</div></div>
+    <div class="chips">${chips}</div>
+    <div class="sbar"><button class="btn" id="playAll">▶ 장면 전체 듣기</button><button class="btn ghost" id="openAll">해석 모두 보기</button></div>
+    <div id="sents">${sents}</div>
+    <div class="qbox">${qs}</div>
+    <div class="snav"><button class="btn ghost" id="prevSc" ${i===0?"hidden":""}>◀ 장면 ${i}</button><span></span>
+      <button class="btn" id="nextSc" ${i===STORY.length-1?"hidden":""}>장면 ${i+2} ▶</button></div></div>`;
+  document.getElementById("prevSc").onclick = () => { showScene(i-1); pills.scrollIntoView({behavior:"smooth"}); };
+  document.getElementById("nextSc").onclick = () => { showScene(i+1); pills.scrollIntoView({behavior:"smooth"}); };
+  document.getElementById("openAll").onclick = e => {
+    const all = document.querySelectorAll("#sents .sent");
+    const open = ![...all].every(x => x.classList.contains("open"));
+    all.forEach(x => x.classList.toggle("open", open));
+    e.target.textContent = open ? "해석 모두 숨기기" : "해석 모두 보기";
+  };
+  document.getElementById("playAll").onclick = () => playScene();
+}
+document.getElementById("sceneBox").addEventListener("click", e => {
+  if (e.target.closest(".say")) return;
+  const qb = e.target.closest(".qbtn");
+  if (qb){ const q = qb.closest(".q"); q.classList.toggle("open");
+    qb.textContent = q.classList.contains("open") ? "숨기기" : (q.querySelector(".think") ? "생각 예시 보기" : "답 보기"); return; }
+  const s = e.target.closest(".sent"); if (s) s.classList.toggle("open");
+});
+
+// 장면 전체 듣기: 한 문장씩 차례로 읽고, 읽는 문장을 노랗게 표시
+let playing = false, token = 0;
+function stopAll(){
+  playing = false; token++;
+  if ("speechSynthesis" in window) speechSynthesis.cancel();
+  document.querySelectorAll(".sent.now").forEach(x => x.classList.remove("now"));
+  const b = document.getElementById("playAll"); if (b) b.textContent = "▶ 장면 전체 듣기";
+}
+function playScene(){
+  if (playing){ stopAll(); return; }
+  const v = enVoices.find(v => v.name === voiceSel.value) || enVoices[0];
+  if (!v){ voiceNote.hidden = false; return; }
+  const rows = [...document.querySelectorAll("#sents .sent")];
+  playing = true;
+  document.getElementById("playAll").textContent = "■ 멈추기";
+  speechSynthesis.cancel();
+  const run = ++token;
+  let j = 0;
+  const next = () => {
+    document.querySelectorAll(".sent.now").forEach(x => x.classList.remove("now"));
+    if (!playing || j >= rows.length){ stopAll(); return; }
+    const row = rows[j++];
+    row.classList.add("now");
+    row.scrollIntoView({block:"nearest",behavior:"smooth"});
+    const u = new SpeechSynthesisUtterance(row.querySelector(".say").dataset.say);
+    u.voice = v; u.lang = v.lang; u.rate = (/Natural/i.test(v.name) ? 0.95 : 0.9) * speed;
+    u.onend = () => { if (playing && run === token) setTimeout(() => { if (run === token) next(); }, 350); };
+    u.onerror = () => { if (playing && run === token) stopAll(); };
+    speechSynthesis.speak(u);
+  };
+  next();
+}
+showScene(0);
+
+/* ④-A 줄거리 빈칸: [ ]안은 정답(| 로 다른 정답도 인정) */
+const PLOT = [
+ ["Eckels has always wanted to see a(n) [dinosaur], so he goes to the office of Time Travel.",
+  "에클스는 항상 공룡을 보고 싶었어요. 그래서 타임 트래블 사무실에 가요."],
+ ["The time machine arrives in the [jungle] of 60 million years ago, and Travis tells the travelers not to [leave] the path.",
+  "타임머신이 6천만 년 전 정글에 도착하고, 트래비스는 여행자들에게 길을 벗어나지 말라고 해요."],
+ ["Everybody gets out of the machine and begins to walk on the [path].",
+  "모두 기계에서 내려 길 위를 걷기 시작해요."],
+ ["A(n) [T. rex|T.rex|T rex] appears. Eckels [panics|runs] and leaves the path by accident. Travis shouts at Eckels, and the T. rex hears him. It then runs toward him.",
+  "티라노사우루스가 나타나요. 에클스는 겁에 질려 허둥대다 실수로 길을 벗어나요. 트래비스가 에클스에게 소리치고, 티라노사우루스가 그 소리를 들어요. 그러고는 그를 향해 달려와요."],
+ ["Travis and the others come back to the [machine|time machine] and find Eckels. Travis tells Eckels that he has put everybody in [danger].",
+  "트래비스와 다른 사람들은 기계로 돌아와 에클스를 발견해요. 트래비스는 에클스가 모두를 위험에 빠뜨렸다고 말해요."],
+ ["Everybody returns to the [present]. Eckels finds some changes and is [confused|shocked]. Then, he finds a dead [butterfly] in the mud on his right shoe.",
+  "모두 현재로 돌아와요. 에클스는 몇 가지 변화를 발견하고 혼란스러워해요. 그러고 나서 오른쪽 신발 진흙 속에서 죽은 나비를 발견해요."]
+];
+const norm = s => s.toLowerCase().replace(/[^a-z]/g,"");
+document.getElementById("plot").innerHTML = PLOT.map(([en,ko],i) =>
+  `<div class="pl"><div class="no">${i+1}</div><div><div class="tx">${esc(en).replace(/\[(.+?)\]/g,
+    (m,a) => `<input data-a="${a}" autocomplete="off" spellcheck="false" aria-label="빈칸">`)}</div>
+    <div class="ko">${ko}</div></div></div>`).join("");
+
+/* ④-B 누가 한 말일까 */
+const WHO = [
+ ["I’ve never seen such a huge thing.","나는 이렇게 거대한 것은 한 번도 본 적이 없어.","Eckels"],
+ ["Just stay calm. I don’t want you to do anything foolish.","그냥 침착하게 있어요. 당신이 어리석은 일은 하지 않았으면 해요.","Travis"],
+ ["You’re lucky. There’s a time machine that leaves in 10 minutes.","운이 좋으시네요. 10분 뒤에 출발하는 타임머신이 있어요.","Mr. Parker"],
+ ["To stay safe, you must follow his instructions.","안전하려면 이 사람의 지시를 꼭 따라야 해요.","Mr. Parker"],
+ ["You left the path.","당신은 길을 벗어났어요.","Travis"],
+ ["There’s only a little mud on my shoes.","제 신발에 진흙이 조금 묻었을 뿐이에요.","Eckels"]
+];
+const PEOPLE = ["Eckels","Travis","Mr. Parker"];
+const whoBox = document.getElementById("who");
+whoBox.innerHTML = WHO.map(([l,k,a],i) => `<div class="wq" data-a="${a}">
+  <div class="line"><b>${"abcdef"[i]}.</b> <button class="say" data-say="${esc(quoteFix(l))}">🔊</button>${esc(l)}</div>
+  <div class="ko">${k}</div>
+  <div class="opts">${PEOPLE.map(p => `<button>${p}</button>`).join("")}</div></div>`).join("");
+/* ⑤ 문법 1: SNS 글 빈칸 (PLOT 과 같은 모양) */
+function blanks(boxId, data){
+  document.getElementById(boxId).innerHTML = data.map(([en,ko,hint],i) =>
+    `<div class="pl"><div class="no">${i+1}</div><div><div class="tx">${hint?`<span class="gno" style="font-size:12px">${hint}</span>`:""}${esc(en).replace(/\[(.+?)\]/g,
+      (m,a) => `<input data-a="${a}" autocomplete="off" spellcheck="false" aria-label="빈칸">`)}</div>
+      <div class="ko">${ko}</div></div></div>`).join("");
+}
+/* 채점: 칸마다 ⭕/❌ 를 붙이고, 틀린 칸 옆에는 초록 '정답' 표를 보여 줌.
+   정답 보기: 아들이 쓴 답은 그대로 두고, 모든 칸 옆에 정답 표를 보여 줌 */
+function blankCheck(boxId, scoreId, ansId){
+  const ins = () => [...document.querySelectorAll(`#${boxId} input`)];
+  ins().forEach(inp => { if (!inp.nextElementSibling || !inp.nextElementSibling.classList.contains("mark"))
+    inp.insertAdjacentHTML("afterend", '<span class="mark"></span>'); });
+  const first = inp => inp.dataset.a.split("|")[0];
+  const ansBtn = document.getElementById(ansId);
+  const clearMarks = () => ins().forEach(inp => { inp.classList.remove("ok","no"); inp.nextElementSibling.className = "mark"; inp.nextElementSibling.innerHTML = ""; });
+  document.getElementById(scoreId.replace("Score","Check")).onclick = () => {
+    let ok = 0;
+    ins().forEach(inp => {
+      const g = inp.dataset.a.split("|").some(a => norm(a) === norm(inp.value));
+      inp.classList.toggle("ok", g); inp.classList.toggle("no", !g);
+      const m = inp.nextElementSibling;
+      m.className = "mark " + (g ? "m-ok" : "m-no");
+      m.innerHTML = g ? "⭕" : `❌ <span class="ans-tag">정답 ${esc(first(inp))}</span>`;
+      if (g) ok++;
+    });
+    ansBtn.textContent = "정답 보기";
+    document.getElementById(scoreId).innerHTML = `⭕ ${ok}개 · ❌ ${ins().length - ok}개` + (ok === ins().length ? " 🎉 모두 맞았어요!" : " · 초록 표가 정답이에요");
+  };
+  ansBtn.onclick = () => {
+    if (ansBtn.textContent === "정답 숨기기"){ clearMarks(); ansBtn.textContent = "정답 보기"; document.getElementById(scoreId).textContent = ""; return; }
+    ins().forEach(inp => { inp.classList.remove("ok","no"); const m = inp.nextElementSibling;
+      m.className = "mark"; m.innerHTML = `<span class="ans-tag">정답 ${esc(first(inp))}</span>`; });
+    ansBtn.textContent = "정답 숨기기";
+    document.getElementById(scoreId).textContent = "";
+  };
+  document.getElementById(boxId).addEventListener("input", e => {
+    const inp = e.target; if (inp.tagName !== "INPUT") return;
+    inp.classList.remove("ok","no");
+    if (ansBtn.textContent !== "정답 숨기기"){ inp.nextElementSibling.className = "mark"; inp.nextElementSibling.innerHTML = ""; }
+  });
+}
+blankCheck("plot","plotScore","plotAns");
+blanks("sns", [
+ ["Bomi_0302: I [have been|'ve been|ve been] to Paris before. It was beautiful.","나는 전에 파리에 가 본 적이 있어. 아름다웠어.","be"],
+ ["Bomi_0302: I [have learned|'ve learned|ve learned|have learnt] to play the piano for three years. Now I’m good at it.","나는 3년 동안 피아노 치는 것을 배워 왔어. 이제 잘 쳐.","learn"],
+ ["Bomi_0302: I [have|'ve|ve] just [finished] my math homework. Now I’m going out to play. Yay!","나는 방금 수학 숙제를 끝냈어. 이제 놀러 나갈 거야. 야호!","finish"]
+]);
+blankCheck("sns","snsScore","snsAns");
+
+/* Play Time: 경험 표 */
+const EXP = [["eat malatang","eaten malatang","마라탕을 먹어 보다"],["be on TV","been on TV","TV에 나와 보다"],
+  ["run a marathon","run a marathon","마라톤을 뛰어 보다"],["swim in the sea","swum in the sea","바다에서 수영해 보다"],
+  ["see a sunrise","seen a sunrise","해돋이를 보다"],["play baseball","played baseball","야구를 해 보다"],
+  ["meet a movie star","met a movie star","영화배우를 만나 보다"]];
+document.querySelector("#exp tbody").innerHTML = EXP.map(([b,pp,ko]) =>
+  `<tr><td><button class="say" data-say="Have you ${pp} before?">🔊</button>Have you <b>${pp}</b>?<div class="ko" style="color:var(--muted);font-size:12.5px">${ko}</div></td>
+   <td><span class="yn"><button>Yes</button><button class="n">No</button></span></td>
+   <td><span class="yn"><button>Yes</button><button class="n">No</button></span></td></tr>`).join("");
+document.getElementById("exp").addEventListener("click", e => {
+  const b = e.target.closest(".yn button"); if (!b) return;
+  b.parentElement.querySelectorAll("button").forEach(x => x.classList.toggle("on", x === b));
+  const tr = b.closest("tr");
+  const yes = [...tr.querySelectorAll(".yn")].map(y => y.querySelector("button.on:not(.n)"));
+  tr.classList.toggle("both", yes.every(Boolean));
+  const td0 = tr.querySelector("td"); const star = td0.querySelector(".star");
+  if (yes.every(Boolean) && !star) td0.insertAdjacentHTML("beforeend",'<span class="star"> ⭐</span>');
+  if (!yes.every(Boolean) && star) star.remove();
+});
+
+/* 문법 2: 단어 순서대로 놓기 */
+const ORDER = [
+ {pre:"1. I’ve just heard", post:"outside!", words:["strange","something"], ans:"something strange",
+  ko:"나 방금 밖에서 이상한 소리를 들었어!", reply:""},
+ {pre:"2. Don’t you", post:"?", words:["something","delicious","smell"], ans:"smell something delicious",
+  ko:"맛있는 냄새 안 나? — 응. 아빠가 쿠키를 굽고 계셔.", reply:"Yes. Dad is baking cookies."},
+ {pre:"3.", post:"on TV?", words:["there","anything","is","interesting"], ans:"is there anything interesting",
+  ko:"TV에 재미있는 거 하니? — 별로.", reply:"Not really."}
+];
+const orderBox = document.getElementById("order");
+orderBox.innerHTML = ORDER.map((o,i) => `<div class="ord" data-i="${i}">
+  <div class="front">${esc(o.pre)} <span class="mini">( ${o.words.join(", ")} )</span> ${esc(o.post)}</div>
+  <div class="slot"></div>
+  <div class="bank">${o.words.map(w => `<button class="tile">${w}</button>`).join("")}</div>
+  <div class="res"></div>
+  <div class="back">${o.reply?`<button class="say" data-say="${o.reply}">🔊</button>대답: ${o.reply} · `:""}${o.ko}</div></div>`).join("");
+orderBox.addEventListener("click", e => {
+  const t = e.target.closest(".tile"); if (!t) return;
+  const box = t.closest(".ord"), slot = box.querySelector(".slot"), o = ORDER[box.dataset.i];
+  box.classList.remove("ok","no"); box.querySelector(".res").textContent = "";
+  if (t.parentElement === slot){
+    box.querySelectorAll(".bank .tile")[+t.dataset.k].classList.remove("used"); t.remove(); return;
+  }
+  const k = [...box.querySelectorAll(".bank .tile")].indexOf(t);
+  t.classList.add("used");
+  slot.insertAdjacentHTML("beforeend", `<button class="tile" data-k="${k}">${t.textContent}</button>`);
+  const placed = [...slot.querySelectorAll(".tile")].map(x => x.textContent);
+  if (placed.length === o.words.length){
+    const right = placed.join(" ") === o.ans;
+    box.classList.add(right ? "ok" : "no");
+    const full = `${o.pre.replace(/^\d\.\s*/,"")} ${placed.join(" ")} ${o.post}`.replace(/\s+([?!])/,"$1").trim();
+    const sentence = full.charAt(0).toUpperCase() + full.slice(1);
+    box.querySelector(".res").innerHTML = right
+      ? `<span style="color:var(--leaf)">⭕ 맞았어요! <button class="say" data-say="${esc(quoteFix(sentence))}">🔊</button>${esc(sentence)}</span>`
+      : `<span style="color:var(--red)">❌ 다시 해 봐요. 놓은 단어를 누르면 빠져요.</span>`;
+  }
+});
+
+/* 놀이: 어법이 맞는 문장 고르기 */
+const TQ = [
+ ["I’ve never seen such a huge thing.","I’ve never saw such a huge thing.","have 다음에는 과거분사 seen!"],
+ ["I don’t want you to do anything foolish.","I don’t want you to do foolish anything.","anything 뒤에 형용사!"],
+ ["Have you ever eaten malatang?","Have you ever ate malatang?","have 다음에는 과거분사 eaten!"],
+ ["I want to drink something cold.","I want to drink cold something.","something 뒤에 형용사!"],
+ ["My uncle has lived in Canada since 2010.","My uncle have lived in Canada since 2010.","주어가 My uncle 한 명이면 has!"],
+ ["There’s nothing wrong with his answer.","There’s wrong nothing with his answer.","nothing 뒤에 형용사!"],
+ ["James has already eaten dinner.","James has already eat dinner.","has 다음에는 과거분사 eaten!"],
+ ["Tim wants to do something fun.","Tim wants to do fun something.","something 뒤에 형용사!"]
+];
+let tStep = 0;
+function drawTrail(){
+  let h = "";
+  for (let i = 0; i <= TQ.length; i++) h += `<span class="${i===tStep?"me":""}">${i===tStep?"🧑":"·"}</span>`;
+  document.getElementById("trail").innerHTML = h + `<span class="end">🦖🦖🦕</span>`;
+}
+function drawTQ(msg=""){
+  drawTrail();
+  const box = document.getElementById("tq");
+  if (tStep >= TQ.length){
+    box.innerHTML = `<div class="tq-msg" style="font-size:18px">🎉 T. rex 가족을 만났어요! 8문제 모두 통과!</div><button class="btn" id="tqAgain">처음부터 다시</button>`;
+    document.getElementById("tqAgain").onclick = () => { tStep = 0; drawTQ(); }; return;
+  }
+  const [r,w] = TQ[tStep];
+  const opts = (tStep % 2 ? [w,r] : [r,w]);
+  box.innerHTML = `<div class="tq-q">${tStep+1} / ${TQ.length} · 어법이 맞는 문장은?</div>
+    <div class="tq-o">${opts.map(o => `<button data-r="${o===r?1:0}">${esc(o)}</button>`).join("")}</div><div class="tq-msg">${msg}</div>`;
+}
+document.getElementById("tq").addEventListener("click", e => {
+  const b = e.target.closest(".tq-o button"); if (!b) return;
+  if (b.dataset.r === "1"){ speak(quoteFix(b.textContent)); tStep++; drawTQ("⭕ 맞았어요! 한 칸 앞으로!"); }
+  else { b.classList.remove("wrong"); void b.offsetWidth; b.classList.add("wrong");
+    b.closest("#tq").querySelector(".tq-msg").innerHTML = `<span style="color:var(--red)">❌ 힌트: ${TQ[tStep][2]}</span>`; }
+});
+drawTQ();
+
+/* ⑥ 써 보기: 쓴 글은 이 브라우저에 저장 */
+const saveKey = "u8write";
+let saved6 = {}; try { saved6 = JSON.parse(localStorage.getItem(saveKey) || "{}"); } catch(e){}
+document.querySelectorAll("#s6 [data-k]").forEach(el => {
+  if (el.type === "checkbox") el.checked = !!saved6[el.dataset.k]; else if (saved6[el.dataset.k]) el.value = saved6[el.dataset.k];
+});
+document.getElementById("s6").addEventListener("input", e => {
+  const el = e.target.closest("[data-k]"); if (!el) return;
+  saved6[el.dataset.k] = el.type === "checkbox" ? el.checked : el.value;
+  try { localStorage.setItem(saveKey, JSON.stringify(saved6)); } catch(e){}
+});
+const val = k => (document.querySelector(`#s6 [data-k="${k}"]`).value || "").trim();
+document.getElementById("wEx").onclick = e => {
+  const b = document.getElementById("wExBox"); b.hidden = !b.hidden;
+  e.target.textContent = b.hidden ? "교과서 예시 보기" : "예시 숨기기";
+};
+function readList(lines){
+  const v = enVoices.find(v => v.name === voiceSel.value) || enVoices[0];
+  if (!v){ voiceNote.hidden = false; return; }
+  if (playing) stopAll();
+  speechSynthesis.cancel();
+  lines.filter(Boolean).forEach(t => {
+    const u = new SpeechSynthesisUtterance(quoteFix(t));
+    u.voice = v; u.lang = v.lang; u.rate = (/Natural/i.test(v.name) ? 0.95 : 0.9) * speed;
+    speechSynthesis.speak(u);
+  });
+}
+document.getElementById("wRead").onclick = () => {
+  const q = k => val(k) ? `"${val(k)}"` : "";
+  readList(["Eckels found some changes in the present and was shocked.", val("w1") && `${q("w1")} he said to himself.`,
+    "He went to Travis to ask what he could do.", val("w2") && `${q("w2")} asked Eckels.`, val("w3") && `${q("w3")} said Travis.`,
+    "Eckels went outside and saw something unthinkable.", val("w4") && `${q("w4")} he said.`]);
+};
+document.getElementById("minaRead").onclick = () => readList(["Dear Future Me,","Hi. How are you? I'm now in the second grade in middle school.",
+  "You've always wanted to be a pilot. I hope your dream has come true. Hope you're happy.","With love, Mina"]);
+const letterLines = () => ["Dear Future Me,", "Hi. How are you? I'm now in the second grade in middle school.",
+  `You've always wanted to be ${val("dream") || "____"}. I hope your dream has come true.`, val("more"), "Hope you're happy.",
+  "With love,", val("name") || "____"];
+document.getElementById("lRead").onclick = () => readList(letterLines().filter(l => !l.includes("____")));
+document.getElementById("lPrint").onclick = () => {
+  const L = letterLines();
+  document.getElementById("printLetter").innerHTML = `<p style="font-size:14px;color:#888">${new Date().toLocaleDateString("ko-KR")} · 타임캡슐 편지</p>`
+    + L.filter(Boolean).map(l => `<p>${esc(l)}</p>`).join("");
+  window.print();
+};
+
+/* 고르기 문제 아래에 '정답 보기' 단추: 누르면 모든 문제의 정답에 ⭕ 정답 표시 */
+function pickReveal(box, itemSel){
+  box.insertAdjacentHTML("afterend", `<div class="tools"><button class="btn ghost">정답 보기</button></div>`);
+  box.nextElementSibling.querySelector("button").onclick = () => {
+    box.querySelectorAll(itemSel).forEach(it => {
+      it.querySelectorAll(".opts button").forEach(b => { if (b.textContent === it.dataset.a) b.classList.add("right"); });
+      it.classList.add("done");
+    });
+  };
+}
+pickReveal(whoBox, ".wq");
+
+/* ⑦ 마무리 */
+function picks(boxId, data){ // [문장, 해석, [보기들], 정답, 풀이]
+  const box = document.getElementById(boxId);
+  box.innerHTML = data.map(([s,ko,opts,a,why],i) => `<div class="pk" data-a="${esc(a)}">
+    <div class="s"><b>(${i+1})</b> ${esc(s)}</div>${ko?`<div class="ko">${ko}</div>`:""}
+    <div class="opts">${opts.map(o => `<button>${esc(o)}</button>`).join("")}</div><div class="why">💡 ${why}</div></div>`).join("");
+  box.addEventListener("click", e => {
+    const b = e.target.closest(".opts button"); if (!b) return;
+    const pk = b.closest(".pk");
+    if (b.textContent === pk.dataset.a){ pk.querySelectorAll(".opts button").forEach(x => x.classList.remove("wrong")); b.classList.add("right"); pk.classList.add("done"); }
+    else { b.classList.remove("wrong"); void b.offsetWidth; b.classList.add("wrong"); }
+  });
+  pickReveal(box, ".pk");
+}
+picks("pick0", [
+ ["I’ve never ( ? ) such a huge thing.","나는 이렇게 거대한 것은 한 번도 본 적이 없어.",["seen","saw"],"seen","have(’ve) 다음에는 과거분사 seen을 써요."],
+ ["I don’t want you to do ( ? ).","나는 네가 어리석은 일은 하나도 하지 않았으면 해.",["foolish anything","anything foolish"],"anything foolish","-thing으로 끝나는 말은 형용사가 뒤에 와요."]
+]);
+blanks("r1", [
+ ["The [founder] of the company is Mr. Davis.","그 회사의 설립자는 데이비스 씨다."],
+ ["Eating too much fast food can [cause] health problems.","패스트푸드를 너무 많이 먹으면 건강 문제를 일으킬 수 있다."],
+ ["Steve was so [terrified] that he couldn’t move at all.","스티브는 너무 겁에 질려서 전혀 움직일 수 없었다."],
+ ["My little sisters sometimes [whisper] to me in a soft voice.","내 여동생들은 가끔 부드러운 목소리로 나에게 속삭인다."]
+]); blankCheck("r1","r1Score","r1Ans");
+blanks("r2", [
+ ["The boy broke the neighbor’s window [by] accident.","그 소년은 실수로 이웃집 창문을 깼다. (by accident 실수로)"],
+ ["My parents will never put me [in] danger.","우리 부모님은 절대 나를 위험에 빠뜨리지 않으실 것이다. (put ~ in danger)"],
+ ["You can ask questions [at] any time during the class.","수업 중에 언제라도 질문할 수 있다. (at any time 언제라도)"]
+]); blankCheck("r2","r2Score","r2Ans");
+
+const SEQ = [
+ ["Eckels and two other travelers arrive in the jungle of 60 million years ago.","에클스와 다른 여행자 두 명이 6천만 년 전 정글에 도착한다."],
+ ["A T. rex appears. Eckels is so terrified that he leaves the path by accident.","티라노사우루스가 나타난다. 에클스는 너무 겁에 질려 실수로 길을 벗어난다."],
+ ["Travis shouts at Eckels, and the T. rex hears him. It then runs toward him and the other travelers.","트래비스가 에클스에게 소리치고, 티라노사우루스가 그 소리를 듣는다. 그리고 그와 다른 여행자들을 향해 달려온다."],
+ ["Travis and the other travelers come back to the time machine and find Eckels inside.","트래비스와 다른 여행자들이 타임머신으로 돌아와 안에 있는 에클스를 발견한다."],
+ ["Eckels returns to the present and finds some changes.","에클스는 현재로 돌아와 몇 가지 변화를 발견한다."],
+ ["Eckels finds a small dead butterfly in the mud on his right shoe.","에클스는 오른쪽 신발의 진흙 속에서 죽은 작은 나비를 발견한다."]
+];
+const seqOrder = [4,1,5,0,3,2]; // 교과서처럼 섞어서 보여 줌
+let seqNext = 0;
+function drawSeq(){
+  seqNext = 0;
+  document.getElementById("seqMsg").textContent = "";
+  document.getElementById("seq").innerHTML = seqOrder.map(i =>
+    `<button data-i="${i}"><span class="n"></span><span>${esc(SEQ[i][0])}<br><span class="mini">${SEQ[i][1]}</span></span></button>`).join("");
+}
+drawSeq();
+document.getElementById("seqReset").onclick = drawSeq;
+document.getElementById("seq").addEventListener("click", e => {
+  const b = e.target.closest("button"); if (!b || b.classList.contains("on")) return;
+  if (+b.dataset.i === seqNext){
+    b.classList.add("on"); b.querySelector(".n").textContent = ++seqNext;
+    if (seqNext === SEQ.length) document.getElementById("seqMsg").textContent = "🎉 순서를 모두 맞혔어요!";
+  } else { b.classList.remove("wrong"); void b.offsetWidth; b.classList.add("wrong");
+    document.getElementById("seqMsg").innerHTML = `<span style="color:var(--red)">그다음 일이 아니에요. 다시 생각해 봐요!</span>`; }
+});
+picks("tf", [
+ ["When Eckels walked into the office, the new president was on TV.","에클스가 사무실에 들어갔을 때, 새 대통령이 TV에 나오고 있었다.",["T","F"],"T","장면 1: Mr. Keith, the new president, was on the news."],
+ ["The jungle was covered in fog when the time machine arrived.","타임머신이 도착했을 때 정글은 안개로 덮여 있었다.",["T","F"],"T","장면 3: The jungle was covered in fog."],
+ ["Travis told the travelers not to walk on the path at any time.","트래비스는 여행자들에게 언제라도 길 위를 걷지 말라고 했다.",["T","F"],"F","길 위를 걷지 말라는 게 아니라, 길을 벗어나지(leave) 말라고 했어요. (장면 2)"],
+ ["When Eckels returned to the present, the sign on the wall looked the same as before.","에클스가 현재로 돌아왔을 때, 벽의 간판은 전과 똑같아 보였다.",["T","F"],"F","간판의 철자가 바뀌어 있었어요. (장면 6: NAIM ANY YEER …)"]
+]);
+blanks("r5", [
+ ["[Have] you ever [seen] a musical before?","너는 전에 뮤지컬을 본 적이 있니?","see"],
+ ["James [has] already [eaten] dinner.","제임스는 벌써 저녁을 먹었다.","eat"],
+ ["My grandparents [have lived|'ve lived|ve lived] in this city for 10 years.","우리 할아버지 할머니는 10년 동안 이 도시에 살아 오셨다.","live"]
+]); blankCheck("r5","r5Score","r5Ans");
+blanks("r6", [
+ ["🥵 Jiho is hot. He wants to drink [something cold].","지호는 더워요. 그는 차가운 것을 마시고 싶어요."],
+ ["🥶 Mia feels cold. She wants to wear [something warm].","미아는 추워요. 그녀는 따뜻한 것을 입고 싶어요."],
+ ["🍩 Bomi wants to eat [something sweet]. She will buy some donuts.","보미는 단것을 먹고 싶어요. 그녀는 도넛을 살 거예요."]
+]); blankCheck("r6","r6Score","r6Ans");
+document.querySelectorAll("#r6 input").forEach(i => i.style.width = "11em");
+
+// 7번 경험 쓰기와 스스로 평가는 저장
+let saved7 = {}; try { saved7 = JSON.parse(localStorage.getItem("u8review") || "{}"); } catch(e){}
+const save7 = () => { try { localStorage.setItem("u8review", JSON.stringify(saved7)); } catch(e){} };
+document.querySelectorAll("#r7 [data-k]").forEach(el => { if (saved7[el.dataset.k]) el.value = saved7[el.dataset.k];
+  el.addEventListener("input", () => { saved7[el.dataset.k] = el.value; save7(); }); });
+document.querySelectorAll("#self>div").forEach(row => {
+  const bs = [...row.querySelectorAll(".faces button")];
+  const set = n => bs.forEach((b,j) => b.classList.toggle("on", j === n));
+  if (saved7[row.dataset.k] != null) set(saved7[row.dataset.k]);
+  bs.forEach((b,j) => b.onclick = () => { set(j); saved7[row.dataset.k] = j; save7(); });
+});
+
+whoBox.addEventListener("click", e => {
+  const b = e.target.closest(".opts button"); if (!b) return;
+  const q = b.closest(".wq");
+  if (b.textContent === q.dataset.a){ q.querySelectorAll(".opts button").forEach(x => x.classList.remove("wrong")); b.classList.add("right"); }
+  else { b.classList.remove("wrong"); void b.offsetWidth; b.classList.add("wrong"); }
+});
+</script>
+</body>
+</html>
