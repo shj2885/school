@@ -41,6 +41,9 @@ h1{font-family:Jua,sans-serif;font-weight:400;margin:2px 0 4px;font-size:clamp(2
 .speed button{border:0;background:none;color:#cfe3d3;font-size:13px;padding:4px 10px;border-radius:999px;white-space:nowrap}
 .speed button.on{background:var(--amber);color:var(--jungle);font-weight:700}
 #voiceNote{background:var(--amber);color:var(--jungle);border-radius:8px;padding:3px 8px;font-weight:700}
+.sync{font-size:12px;border-radius:999px;padding:2px 9px;background:rgba(255,255,255,.1);color:#cfe3d3;white-space:nowrap}
+.sync.ok{color:#b9e39b}
+.sync.no{color:#ffd27a}
 /* 칸 고르기 */
 nav{display:flex;gap:6px;overflow-x:auto;padding-bottom:0;scrollbar-width:none}
 nav::-webkit-scrollbar{display:none}
@@ -316,6 +319,7 @@ td.ex b{color:var(--red)}
       <span class="speed" id="speed">
         <button data-r="1" class="on">🐇 보통</button><button data-r="0.7">🐢 천천히</button><button data-r="0.5">🐌 아주 천천히</button>
       </span>
+      <span id="syncState" class="sync">☁️ 엄마에게 보내는 중…</span>
       <span id="voiceNote" hidden>이 브라우저엔 영어 목소리가 없어요. 엣지(Edge)나 크롬으로 열어 주세요.</span>
     </div>
     <nav id="nav">
@@ -1297,6 +1301,138 @@ whoBox.addEventListener("click", e => {
   if (b.textContent === q.dataset.a){ q.querySelectorAll(".opts button").forEach(x => x.classList.remove("wrong")); b.classList.add("right"); }
   else { b.classList.remove("wrong"); void b.offsetWidth; b.classList.add("wrong"); }
 });
+
+/* ===== 엄마에게 기록 보내기 =====
+   아들이 한 것(본 칸, 채점 결과, 틀린 답, 정답 보기 누른 것, 쓴 글)을 모아
+   에듀깨비 서버(/api/study)에 보낸다. 엄마는 mom.html 에서 비밀번호로 본다. */
+const STUDY_API = "https://shj-class.vercel.app/api/study";
+const UNIT = "u8";
+let REC = {}; try { REC = JSON.parse(localStorage.getItem("u8rec") || "{}"); } catch(e){}
+REC.tabs = REC.tabs || {}; REC.scenes = REC.scenes || {}; REC.peek = REC.peek || {};
+REC.blanks = REC.blanks || {}; REC.picks = REC.picks || {}; REC.wrongs = REC.wrongs || {};
+let pendingEvents = [], sendTimer = null;
+const nowHM = () => new Date().toLocaleTimeString("ko-KR",{hour:"2-digit",minute:"2-digit"});
+const BOX_NAME = {plot:"④ 줄거리 빈칸", sns:"⑤ SNS 글(현재완료)", r1:"⑦ 1번 단어 빈칸", r2:"⑦ 2번 at·by·in",
+  r5:"⑦ 5번 현재완료", r6:"⑦ 6번 something+형용사", who:"④ 누가 한 말일까", pick0:"⑦ 언어 형식 고르기", tf:"⑦ 4번 T/F"};
+const TAB_NAME = {s1:"① 들어가기", s2:"② 단어", s3:"③ 본문", s4:"④ 줄거리", s5:"⑤ 문법", s6:"⑥ 써 보기", s7:"⑦ 마무리"};
+
+function sentenceOf(inp){ // 빈칸이 든 문장을 '____' 로 바꿔 짧게
+  const tx = inp.closest(".tx"); if (!tx) return "";
+  let s = ""; tx.childNodes.forEach(n => { s += n.nodeType === 3 ? n.textContent : (n.tagName === "INPUT" ? (n === inp ? "[  ]" : "__") : (n.classList && n.classList.contains("mark") ? "" : n.textContent)); });
+  return s.replace(/\s+/g," ").trim().slice(0,110);
+}
+function snapshot(){
+  // 빈칸 문제: 마지막 채점 결과(아들이 쓴 답과 정답)
+  // 고르기 문제: 맞혔는지, 틀린 횟수
+  // (다시 열면 화면은 처음 상태라서, 전에 맞힌 기록은 지우지 않고 합친다)
+  ["who","pick0","tf"].forEach(id => {
+    const box = document.getElementById(id); if (!box) return;
+    const old = REC.picks[id] || [];
+    REC.picks[id] = [...box.querySelectorAll(".wq,.pk")].map((it,i) => ({
+      q: (it.querySelector(".line,.s") || it).textContent.replace(/🔊/g,"").replace(/\s+/g," ").trim().slice(0,90),
+      ok: !!it.querySelector(".opts button.right") || !!(old[i] && old[i].ok), wrong: (REC.wrongs[id+"_"+i] || 0)
+    }));
+  });
+  const os = REC.seq || {}, ot = REC.tq || {};
+  REC.seq = { done: seqNext >= SEQ.length || !!os.done, step: Math.max(seqNext, os.step || 0), wrong: REC.wrongs.seq || 0 };
+  REC.tq = { step: Math.max(tStep, ot.step || 0), total: TQ.length, wrong: REC.wrongs.tq || 0 };
+  const oo = REC.order || [];
+  REC.order = [...document.querySelectorAll(".ord")].map((o,i) => ({ q: ORDER[i].pre + " ( ) " + ORDER[i].post,
+    ok: o.classList.contains("ok") || !!(oo[i] && oo[i].ok), wrong: REC.wrongs["ord_"+i] || 0 }));
+  const oe = REC.exp || [];
+  REC.exp = [...document.querySelectorAll("#exp tbody tr")].map((tr,i) => {
+    const yn = [...tr.querySelectorAll(".yn")].map(y => { const b = y.querySelector("button.on"); return b ? b.textContent : ""; });
+    const o = oe[i] || {};
+    return { q: tr.querySelector("b").textContent, me: yn[0] || o.me || "", mom: yn[1] || o.mom || "" };
+  });
+  REC.write = { ...saved6, ...saved7 };
+  REC.at = new Date().toISOString();
+  try { localStorage.setItem("u8rec", JSON.stringify(REC)); } catch(e){}
+}
+function sendSoon(event, delay = 1500){
+  if (event) pendingEvents.push(event);
+  clearTimeout(sendTimer);
+  sendTimer = setTimeout(sendNow, delay);
+}
+async function sendNow(){
+  snapshot();
+  const events = pendingEvents.splice(0);
+  const st = document.getElementById("syncState");
+  try {
+    const r = await fetch(STUDY_API, { method:"POST", headers:{"Content-Type":"application/json"},
+      body: JSON.stringify({ unit: UNIT, data: REC, events }) });
+    if (!r.ok) throw 0;
+    if (st){ st.textContent = `☁️ 엄마에게 보냄 ${nowHM()}`; st.className = "sync ok"; }
+  } catch(e){
+    pendingEvents.unshift(...events);
+    if (st){ st.textContent = "☁️ 인터넷 연결되면 다시 보낼게요"; st.className = "sync no"; }
+  }
+}
+
+// 공룡 놀이는 누르면 화면을 새로 그려서, 누르기 전에 어디였는지 먼저 적어 둔다
+let clickInTQ = false;
+document.addEventListener("click", e => { clickInTQ = !!e.target.closest("#tq"); }, true);
+// 모든 클릭을 문서 맨 위에서 지켜본다(각 문제의 원래 동작이 끝난 뒤에 상태를 읽음)
+document.addEventListener("click", e => {
+  const b = e.target.closest("button"); if (!b) return;
+  // 칸 이동
+  if (b.closest("#nav")){ const t = b.dataset.go; if (!REC.tabs[t]){ REC.tabs[t] = nowHM(); sendSoon(`${TAB_NAME[t]} 칸을 처음 열었어요`); } return; }
+  if (b.closest("#scenePills") || b.id === "nextSc" || b.id === "prevSc"){ REC.scenes[curScene+1] = 1; sendSoon(); return; }
+  // 빈칸 채점 / 정답 보기
+  const m = b.id.match(/^(plot|sns|r1|r2|r5|r6)(Check|Ans)$/);
+  if (m){
+    const id = m[1], ins = [...document.querySelectorAll(`#${id} input`)];
+    if (m[2] === "Check"){
+      const items = ins.map(inp => ({ q: sentenceOf(inp), typed: inp.value.trim(), ans: inp.dataset.a.split("|")[0], ok: inp.classList.contains("ok") }));
+      const ok = items.filter(x => x.ok).length;
+      const prev = REC.blanks[id];
+      REC.blanks[id] = { items, ok, total: items.length, tries: (prev ? prev.tries : 0) + 1, at: nowHM() };
+      sendSoon(`${BOX_NAME[id]} 채점: ${ok}/${items.length}`, 300);
+    } else if (b.textContent === "정답 숨기기"){
+      REC.peek[id] = nowHM(); sendSoon(`${BOX_NAME[id]} 정답 보기를 눌렀어요`, 300);
+    }
+    return;
+  }
+  // 고르기 문제 아래 '정답 보기'
+  const tools = b.closest(".tools"), prevBox = tools && tools.previousElementSibling;
+  if (prevBox && ["who","pick0","tf"].includes(prevBox.id) && b.textContent === "정답 보기"){
+    REC.peek[prevBox.id] = nowHM(); sendSoon(`${BOX_NAME[prevBox.id]} 정답 보기를 눌렀어요`, 300); return;
+  }
+  // 고르기 문제 하나 고름
+  const it = b.closest(".wq,.pk");
+  if (it && b.closest(".opts")){
+    const box = it.parentElement, i = [...box.children].indexOf(it);
+    if (b.classList.contains("wrong")) REC.wrongs[box.id+"_"+i] = (REC.wrongs[box.id+"_"+i] || 0) + 1;
+    sendSoon(); return;
+  }
+  // 순서 맞히기
+  if (b.closest("#seq")){
+    if (b.classList.contains("wrong")) REC.wrongs.seq = (REC.wrongs.seq || 0) + 1;
+    sendSoon(seqNext >= SEQ.length ? "⑦ 3번 이야기 순서 맞히기를 끝냈어요" : null); return;
+  }
+  // 공룡 놀이
+  if (clickInTQ){
+    if (b.classList.contains("wrong")) REC.wrongs.tq = (REC.wrongs.tq || 0) + 1;
+    sendSoon(tStep >= TQ.length ? "⑤ T. rex 가족 놀이 8문제를 끝냈어요" : null); return;
+  }
+  // 단어 순서 놓기
+  const ord = b.closest(".ord");
+  if (ord){
+    const i = +ord.dataset.i;
+    if (ord.classList.contains("no")) REC.wrongs["ord_"+i] = (REC.wrongs["ord_"+i] || 0) + 1;
+    sendSoon(ord.classList.contains("ok") ? `⑤ 단어 순서 ${i+1}번을 맞혔어요` : null); return;
+  }
+  if (b.closest("#exp") || b.closest("#self")) { sendSoon(); return; }
+  if (b.classList.contains("qbtn")) { REC.qopen = (REC.qopen || 0) + 1; sendSoon(); }
+});
+// 쓴 글은 다 쓰고 3초 쉬면 보냄
+let wroteOnce = false;
+document.addEventListener("input", e => {
+  if (!e.target.closest("#s6,#r7")) return;
+  sendSoon(wroteOnce ? null : "⑥ 써 보기에 글을 쓰기 시작했어요", 3000); wroteOnce = true;
+});
+REC.tabs.s1 = REC.tabs.s1 || nowHM();
+sendSoon("수업 화면을 열었어요", 2000);
 </script>
 </body>
 </html>

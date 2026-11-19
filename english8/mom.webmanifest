@@ -1,0 +1,13 @@
+{
+  "name": "영어 8과 엄마 확인",
+  "short_name": "8과 엄마확인",
+  "start_url": "mom.html",
+  "scope": "./",
+  "id": "mom.html",
+  "display": "standalone",
+  "background_color": "#12261b",
+  "theme_color": "#12261b",
+  "icons": [
+    { "src": "icon.png", "sizes": "512x512", "type": "image/png", "purpose": "any" }
+  ]
+}

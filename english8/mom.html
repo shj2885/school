@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>영어 8과 엄마 확인</title>
+<meta name="theme-color" content="#12261b">
+<link rel="manifest" href="mom.webmanifest">
+<link rel="icon" type="image/png" href="icon.png">
+<link rel="apple-touch-icon" href="icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="8과 엄마확인">
+<meta name="robots" content="noindex">
+<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+<style>
+:root{--jungle:#12261b;--jungle2:#1b3a28;--leaf:#2f6b45;--moss:#8fc26a;--amber:#ffb627;--amber-soft:#fff1cf;
+  --paper:#fbf7ec;--ink:#1d2a22;--muted:#5d6b62;--line:#e3dccb;--card:#fff;--red:#d9483b}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--paper);color:var(--ink);font-family:"Malgun Gothic","맑은 고딕","Apple SD Gothic Neo",sans-serif;line-height:1.55}
+button,input{font-family:inherit}
+header{background:linear-gradient(160deg,var(--jungle),var(--jungle2));color:#fff;padding:16px}
+.in{max-width:760px;margin:0 auto}
+h1{font-family:Jua,sans-serif;font-weight:400;margin:0;font-size:clamp(20px,5.5vw,28px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sub{color:#cfe3d3;font-size:13px;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+main{max-width:760px;margin:0 auto;padding:16px 16px 50px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:12px}
+h2{font-size:16px;margin:0 0 10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.btn{border:0;border-radius:999px;padding:9px 16px;font-size:15px;background:var(--leaf);color:#fff;cursor:pointer}
+.btn.ghost{background:#fff;color:var(--leaf);border:2px solid var(--leaf)}
+.login input{width:100%;font-size:18px;padding:10px 12px;border:2px solid var(--line);border-radius:10px;margin:8px 0}
+.login label{font-size:14px;color:var(--muted)}
+.err{color:var(--red);font-weight:700;min-height:22px;font-size:14px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.when{font-size:15px}
+.when b{color:var(--leaf)}
+.tabs{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:6px}
+.tabs div{border-radius:10px;padding:6px 8px;font-size:13px;background:#f1efe8;color:var(--muted)}
+.tabs div.on{background:#e6f3dc;color:var(--leaf);font-weight:700}
+.score{display:inline-block;border-radius:999px;padding:1px 10px;font-weight:700;font-size:14px;background:#e6f3dc;color:var(--leaf)}
+.score.bad{background:#fde6e3;color:var(--red)}
+.score.none{background:#f1efe8;color:var(--muted)}
+.peek{display:inline-block;background:var(--amber-soft);color:#8a5a00;border-radius:999px;padding:1px 8px;font-size:12.5px;margin-left:4px}
+.qrow{display:flex;justify-content:space-between;gap:8px;align-items:center;padding:8px 0;border-top:1px dashed var(--line)}
+.qrow:first-of-type{border-top:0}
+.qrow .name{font-weight:700;font-size:14.5px}
+.miss{margin:4px 0 6px;padding-left:10px;border-left:3px solid var(--red);font-size:13.5px}
+.miss div{margin:3px 0}
+.miss s{color:var(--red)}
+.miss b{color:var(--leaf)}
+.empty{color:var(--muted);font-size:14px}
+.wbox{background:#fffdf6;border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:15px;margin-top:6px}
+.wbox .u{color:var(--leaf);font-weight:700;background:var(--amber-soft);border-radius:4px;padding:0 3px}
+.wbox .no{color:#b9b3a3}
+.log div{display:flex;gap:10px;font-size:14px;padding:4px 0;border-top:1px solid #f1ede2}
+.log time{color:var(--muted);flex:0 0 92px;font-size:12.5px}
+table{border-collapse:collapse;width:100%;font-size:14px}
+td,th{padding:5px 6px;border-top:1px solid var(--line);text-align:left}
+th{color:var(--muted);font-weight:400;font-size:12.5px}
+.foot{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+</style>
+</head>
+<body>
+<header><div class="in">
+  <h1>👩 영어 8과 엄마 확인</h1>
+  <div class="sub">아들이 공부한 기록 · 어디까지 했는지, 무엇을 틀렸는지</div>
+</div></header>
+<main id="app"></main>
+
+<script>
+const API = "https://shj-class.vercel.app/api/study";
+const UNIT = "u8";
+const app = document.getElementById("app");
+const esc = s => String(s ?? "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+let pw = ""; try { pw = localStorage.getItem("u8mom") || ""; } catch(e){}
+
+const TABS = [["s1","① 들어가기"],["s2","② 단어"],["s3","③ 본문"],["s4","④ 줄거리"],["s5","⑤ 문법"],["s6","⑥ 써 보기"],["s7","⑦ 마무리"]];
+const BLANKS = [["plot","④ 줄거리 빈칸 채우기"],["sns","⑤ SNS 글 (현재완료)"],["r1","⑦-1 단어 빈칸"],["r2","⑦-2 at · by · in"],["r5","⑦-5 현재완료 쓰기"],["r6","⑦-6 something + 형용사"]];
+const PICKS = [["who","④ 누가 한 말일까"],["pick0","⑦ 언어 형식 고르기"],["tf","⑦-4 T/F"]];
+
+function loginView(msg=""){
+  app.innerHTML = `<div class="card login">
+    <h2>🔑 관리자 비밀번호</h2>
+    <div class="empty">에듀깨비 사이트 관리자 비밀번호를 넣어 주세요.</div>
+    <input id="pw" type="password" autocomplete="current-password" placeholder="비밀번호">
+    <label><input type="checkbox" id="keep" checked> 이 휴대폰에서 기억하기</label>
+    <div class="err">${esc(msg)}</div>
+    <button class="btn" id="go">기록 보기</button></div>`;
+  const go = () => { pw = document.getElementById("pw").value.trim(); if (!pw) return;
+    if (document.getElementById("keep").checked){ try { localStorage.setItem("u8mom", pw); } catch(e){} }
+    load(); };
+  document.getElementById("go").onclick = go;
+  document.getElementById("pw").onkeydown = e => { if (e.key === "Enter") go(); };
+  document.getElementById("pw").focus();
+}
+
+async function load(){
+  app.innerHTML = `<div class="card empty">불러오는 중…</div>`;
+  try {
+    const r = await fetch(API, { method:"POST", headers:{"Content-Type":"application/json","x-admin-password":pw}, body: JSON.stringify({ unit: UNIT, admin: true }) });
+    const j = await r.json().catch(() => ({}));
+    if (!r.ok){ if (r.status === 401 || r.status === 429){ try { localStorage.removeItem("u8mom"); } catch(e){} } return loginView(j.error || "불러오지 못했어요."); }
+    show(j.record);
+  } catch(e){ loginView("인터넷 연결을 확인해 주세요."); }
+}
+
+const fmt = iso => { const d = new Date(iso); return isNaN(d) ? "" : d.toLocaleString("ko-KR",{month:"numeric",day:"numeric",weekday:"short",hour:"2-digit",minute:"2-digit"}); };
+const scoreTag = (ok,total) => `<span class="score ${ok===total?"":"bad"}">⭕ ${ok} / ${total}</span>`;
+
+function show(rec){
+  if (!rec || !rec.data){ app.innerHTML = `<div class="card"><h2>아직 기록이 없어요</h2><div class="empty">아들이 수업 화면을 열면 여기에 기록이 생겨요.</div></div>${foot()}`; bindFoot(); return; }
+  const d = rec.data, peek = d.peek || {};
+  let h = `<div class="card top"><div class="when">마지막 공부 <b>${fmt(rec.at)}</b></div><button class="btn ghost" id="rf">↻ 새로고침</button></div>`;
+
+  h += `<div class="card"><h2>📍 열어 본 칸</h2><div class="tabs">${TABS.map(([k,n]) =>
+    `<div class="${d.tabs && d.tabs[k] ? "on" : ""}">${d.tabs && d.tabs[k] ? "✅" : "⬜"} ${n}</div>`).join("")}</div>
+    <div class="empty" style="margin-top:8px">③ 본문에서 본 장면: ${[1,2,3,4,5,6].map(i => d.scenes && d.scenes[i] ? `<b style="color:var(--leaf)">${i}</b>` : `<span style="color:#c9c2b0">${i}</span>`).join(" · ")}
+    ${d.qopen ? ` · 본문 질문 답 확인 ${d.qopen}번` : ""}</div></div>`;
+
+  // 빈칸 문제
+  h += `<div class="card"><h2>✏️ 빈칸 문제 (마지막 채점)</h2>`;
+  BLANKS.forEach(([id,name]) => {
+    const b = d.blanks && d.blanks[id];
+    h += `<div class="qrow"><span class="name">${name}${peek[id] ? `<span class="peek">👀 정답 봄 ${esc(peek[id])}</span>` : ""}</span>
+      ${b ? `<span>${scoreTag(b.ok,b.total)} <span class="empty">${b.tries}번 채점</span></span>` : `<span class="score none">아직 안 함</span>`}</div>`;
+    if (b){ const miss = b.items.filter(x => !x.ok);
+      if (miss.length) h += `<div class="miss">${miss.map(x => `<div>${esc(x.q)}<br>아들 답 <s>${esc(x.typed) || "(빈칸)"}</s> → 정답 <b>${esc(x.ans)}</b></div>`).join("")}</div>`; }
+  });
+  h += `</div>`;
+
+  // 고르기 문제
+  h += `<div class="card"><h2>👆 고르기 문제</h2>`;
+  PICKS.forEach(([id,name]) => {
+    const p = d.picks && d.picks[id];
+    const ok = p ? p.filter(x => x.ok).length : 0, wrong = p ? p.reduce((a,x) => a + (x.wrong||0), 0) : 0;
+    h += `<div class="qrow"><span class="name">${name}${peek[id] ? `<span class="peek">👀 정답 봄 ${esc(peek[id])}</span>` : ""}</span>
+      ${p && (ok || wrong) ? `<span>${scoreTag(ok,p.length)} <span class="empty">틀린 횟수 ${wrong}</span></span>` : `<span class="score none">아직 안 함</span>`}</div>`;
+    const hard = p ? p.filter(x => x.wrong) : [];
+    if (hard.length) h += `<div class="miss">${hard.map(x => `<div>${esc(x.q)} <s>${x.wrong}번 틀림</s></div>`).join("")}</div>`;
+  });
+  const sq = d.seq || {}, tq = d.tq || {}, od = d.order || [];
+  h += `<div class="qrow"><span class="name">⑦-3 이야기 순서</span>${sq.done ? `<span class="score">✅ 끝 · 틀린 횟수 ${sq.wrong||0}</span>` : `<span class="score none">${sq.step||0} / 6</span>`}</div>`;
+  h += `<div class="qrow"><span class="name">⑤ T. rex 가족 놀이</span>${tq.step >= (tq.total||8) ? `<span class="score">✅ 끝 · 틀린 횟수 ${tq.wrong||0}</span>` : `<span class="score none">${tq.step||0} / ${tq.total||8}</span>`}</div>`;
+  h += `<div class="qrow"><span class="name">⑤ 단어 순서 놓기</span><span class="score ${od.every(x=>x.ok)&&od.length?"":"none"}">${od.filter(x=>x.ok).length} / ${od.length||3} · 틀린 횟수 ${od.reduce((a,x)=>a+(x.wrong||0),0)}</span></div>`;
+  h += `</div>`;
+
+  // 쓴 글
+  const w = d.write || {};
+  const u = v => v ? `<span class="u">${esc(v)}</span>` : `<span class="no">(아직 안 씀)</span>`;
+  h += `<div class="card"><h2>📝 아들이 쓴 글</h2>
+    <div class="empty">⑥ 이야기 이어 쓰기</div>
+    <div class="wbox">Eckels found some changes in the present and was shocked. “${u(w.w1)}” he said to himself.
+      He went to Travis to ask what he could do. “${u(w.w2)}” asked Eckels. “${u(w.w3)}” said Travis.
+      Eckels went outside and saw something unthinkable. “${u(w.w4)}” he said.</div>
+    <div class="empty" style="margin-top:6px">점검표: ${["상상력","현재완료·something+형용사","철자·구두점"].map((t,i) => (w["c"+(i+1)] ? "☑️ " : "⬜ ") + t).join(" · ")}</div>
+    <div class="empty" style="margin-top:12px">⑥ 10년 뒤의 나에게 편지</div>
+    <div class="wbox">Dear Future Me, … You’ve always wanted to be ${u(w.dream)}. I hope your dream has come true. ${w.more ? u(w.more) : ""} … With love, ${u(w.name)}</div>
+    <div class="empty" style="margin-top:12px">⑦-7 특별한 경험 두 가지</div>
+    <div class="wbox">① ${u(w.e1)}<br>② ${u(w.e2)}</div>
+    <div class="empty" style="margin-top:12px">스스로 평가: Words and Reading ${["😊","🙂","😥"][w.s1] || "—"} · Grammar and Writing ${["😊","🙂","😥"][w.s2] || "—"}</div>
+  </div>`;
+
+  // Have you ~?
+  const ex = (d.exp || []).filter(x => x.me || x.mom);
+  if (ex.length) h += `<div class="card"><h2>🙋 Have you ~? (⑤ 문법)</h2><table><tr><th>질문</th><th>아들</th><th>엄마</th></tr>
+    ${ex.map(x => `<tr><td>Have you ${esc(x.q)}?</td><td>${esc(x.me)||"—"}</td><td>${esc(x.mom)||"—"}</td></tr>`).join("")}</table></div>`;
+
+  // 최근 기록
+  const log = (rec.log || []).slice(-40).reverse();
+  h += `<div class="card log"><h2>🕒 최근 기록</h2>${log.length ? log.map(x => `<div><time>${fmt(x.t)}</time><span>${esc(x.m)}</span></div>`).join("") : `<div class="empty">아직 없어요</div>`}</div>`;
+  app.innerHTML = h + foot();
+  document.getElementById("rf").onclick = load;
+  bindFoot();
+}
+const foot = () => `<div class="foot"><button class="btn ghost" id="forget">이 휴대폰에서 비밀번호 잊기</button></div>`;
+function bindFoot(){ document.getElementById("forget").onclick = () => { try { localStorage.removeItem("u8mom"); } catch(e){} pw = ""; loginView(); }; }
+
+if (pw) load(); else loginView();
+</script>
+</body>
+</html>
